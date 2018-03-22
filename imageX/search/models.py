@@ -1,7 +1,7 @@
 from django.db import models
 from django.utils import timezone
 
-'''def user_directory_path(instance):
+def user_directory_path(instance):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
     return 'image_{0}/{1}'.format(instance.image_id, instance.title)
 
@@ -24,5 +24,5 @@ class Image(models.Model):
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.title'''
+        return self.title
 
