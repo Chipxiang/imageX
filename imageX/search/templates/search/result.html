@@ -4,7 +4,7 @@
       {% for image in list_images %}
         {% if image.title == keyword %}
         <li>{{image.tag}}</li>
-        <img src='media/image.image' >
+        <img src='/media/{{image.image}}' alt="">
         {% endif %}
       {% endfor %}
   </ul>>

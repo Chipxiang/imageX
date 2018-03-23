@@ -1,11 +1,19 @@
 from django.shortcuts import render,redirect
 from .forms import ImageForm
+from .models import Image
 
 def model_form_upload(request):
     if request.method == 'POST':
         form = ImageForm(request.POST, request.FILES)
         if form.is_valid():
-            form.save()
+            title = form.cleaned_data['title']
+            tag = form.cleaned_data['tag']
+            image = form.cleaned_data['image']
+            u = Image()
+            u.tag = tag
+            u.title = title
+            u.image = image
+            u.save()
             return redirect('upload')
     else:
         form = ImageForm()
