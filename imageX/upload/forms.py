@@ -1,4 +1,4 @@
-from .models import Image
+from main.models import Image
 from django import forms
 
 

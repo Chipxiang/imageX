@@ -1,6 +1,6 @@
 from django.http import HttpResponse
 from django.shortcuts import render
-from upload.models import Image
+from main.models import Image
 from .forms import SearchForm
 
 '''
@@ -18,7 +18,7 @@ def results(request):
 
 def searchImage(request):
     list_images = []
-    base_images = Image.objects.order_by('tag')
+    base_images = Image.objects.order_by('uploaded_at')
     nothing = False
     if 'searchItem' in request.GET:
         keyword = request.GET['searchItem']

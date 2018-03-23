@@ -8,22 +8,17 @@
 </head>
 
 <body>
-
+<form action="." method ="get">
   <div id="header" data-position="fixed">
     <span>imageX</span>
-    <input type="text" name="searchKeyword" placeholder=' keyword'>
+    <input type="text" name="searchItem" placeholder=' keyword'>
+      <input type="submit" value="Search"/>
     <button class='top_right'> Log in </button>
+
   </div>
-
-
- <form action="." method ="get">
-
-    <lable>ImageX: what do you want</lable>
-    <input id="userSearch" name="searchItem" type="search" required/>
-    <input type="submit" value="Search"/>
-
-
 </form>
+
+
 
   <h2 class="keyword">Keyword</h2>
 
@@ -60,7 +55,6 @@
   <div>
       {% for image in list_images %}
         <p>{{image.tag}}</p>
-        <p>{{ nothing }}</p>
         <img src='/media/{{image.image}}' height="150px" width="200px" >
       {% endfor %}
   </div>

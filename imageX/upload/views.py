@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect
 from .forms import ImageForm
-from .models import Image
+from main.models import Image
 
 def upload(request):
     if request.method == 'POST':
@@ -14,7 +14,7 @@ def upload(request):
             u.title = title
             u.image = image
             u.save()
-            return redirect('upload')
+            return redirect('/main/')
     else:
         form = ImageForm()
     return render(request, 'upload/model_form_upload.html', {'form': form} )

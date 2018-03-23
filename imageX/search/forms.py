@@ -1,5 +1,5 @@
 from django import forms
-from upload.models import Image
+from main.models import Image
 
 class SearchForm(forms.ModelForm):
     class Meta:
