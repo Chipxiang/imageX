@@ -3,11 +3,10 @@ from django.utils import timezone
 
 def user_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
-    return 'image_{0}/{1}'.format(instance.title, filename)
+    return 'image_{0}/{1}'.format(instance.owner, filename)
 
 class Member(models.Model):
-    member_name = models.CharField(max_length=50)
-
+    member_name = models.CharField(max_length=50, default=None)
     def __str__(self):
         return self.member_name
 
@@ -16,6 +15,7 @@ class Category(models.Model):
 
 class Image(models.Model):
     image_id = models.CharField(max_length=10)
+    owner = 'Member000'
     #owner = models.ForeignKey(Member, on_delete=models.CASCADE)
     #category = models.ForeignKey(Category, on_delete=models.CASCADE)
     title = models.CharField(max_length=20)
