@@ -3,7 +3,7 @@ from django.utils import timezone
 
 def user_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
-    return 'image_{0}/{1}'.format(instance.title, filename)
+    return '{0}_{1}'.format(instance.title, filename)
 
 class Member(models.Model):
     member_name = models.CharField(max_length=50, default=None)
