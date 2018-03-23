@@ -1,0 +1,10 @@
+
+{% if list_images %}
+  <ul>
+      {% for image in list_images %}
+        {% if image.title == keyword %}
+        <li>{{image.tag}}</li>
+        {% endif %}
+      {% endfor %}
+  </ul>>
+{% endif %}
