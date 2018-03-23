@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from .forms import ImageForm
 from .models import Image
 
-def model_form_upload(request):
+def upload(request):
     if request.method == 'POST':
         form = ImageForm(request.POST, request.FILES)
         if form.is_valid():

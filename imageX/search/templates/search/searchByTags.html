@@ -15,13 +15,16 @@
     <button class='top_right'> Log in </button>
   </div>
 
- <form action="results/" method ="get">
+
+ <form action="." method ="get">
 
     <lable>ImageX: what do you want</lable>
     <input id="userSearch" name="searchItem" type="search" required/>
     <input type="submit" value="Search"/>
 
+
 </form>
+
   <h2 class="keyword">Keyword</h2>
 
   <div id='naviBar'>
@@ -36,20 +39,32 @@
     </select>
   </div>
 
-  <div id='imageArea'>
-    <div class='column' id='col-1'>
-      <img src="ImageField/Images/image0.jpg">
-      <img src='ImageField/Images/image1.jpg'>
-    </div>
-    <div class='column' id='col-2'>
-      <img src='ImageField/Images/image2.jpg'>
-      <img src='ImageField/Images/image3.jpg'>
-    </div>
-    <div class='column' id='col-3'>
-      <img src='ImageField/Images/image4.jpg'>
-      <img src='ImageField/Images/image5.jpg'>
-    </div>
+  {% if nothing %}
+  <div>
+      <p>Nothing Matches</p>
   </div>
+{% endif %}
+
+{% if not nothing and  not list_images  %}
+  <div id='imageArea'>
+      {% for image in base_images %}
+    <div>
+      <img src='/media/{{image.image}}' height="150px" width="200px" >
+    </div>
+      {% endfor %}
+  </div>
+{% endif %}
+
+{% if list_images %}
+  <h2 class="results">results</h2>
+  <div>
+      {% for image in list_images %}
+        <p>{{image.tag}}</p>
+        <p>{{ nothing }}</p>
+        <img src='/media/{{image.image}}' height="150px" width="200px" >
+      {% endfor %}
+  </div>
+  {% endif %}
 
 
 </body>

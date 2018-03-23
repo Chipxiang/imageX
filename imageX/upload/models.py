@@ -14,6 +14,7 @@ class Category(models.Model):
     text = models.CharField(max_length=20)
 
 class Image(models.Model):
+
     image_id = models.CharField(max_length=10)
     #owner = 'Member000'
     #owner = models.ForeignKey(Member, on_delete=models.CASCADE)
