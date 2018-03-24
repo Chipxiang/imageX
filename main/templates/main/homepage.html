@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>imageX</title>
+    <link rel="stylesheet" href="style.css" type="text/css">
+</head>
+
+<body>
+
+  <div id="header" data-position="fixed">
+    <span>imageX</span>
+    <input type="text" name="searchKeyword" placeholder=' keyword'>
+    <span class='top_right'>Homepage</span>
+  </div>
+  
+  <div id='userInfo'>
+    <img src='ImageField/avatar.jpeg' id='avatar'>
+    <div id='textInfo'>
+      <h1 id='name'>Username</h1>
+      <hr>
+      <p id='selfIntro'>a brief self introduction</p>
+    </div>
+  </div>
+
+
+  <div id='naviBar'>
+    <div id='naviSub'>
+    	<span id='byTags'>Image <span>5</span></span>
+    	<span id='byTags'>Likes <span>999</span></span>
+    </div>
+
+  <hr>
+<form action='search' >
+    <div class="Right">
+      <button>Search</button>
+    </div>
+  <br>
+</form>
+
+<form action={% url 'login'%} >
+    <div class="Right">
+      <button>login</button>
+    </div>
+  <br>
+</form>
+  <hr>
+  <div id='imageArea'>
+
+  </div>
+
+
+
+</body>

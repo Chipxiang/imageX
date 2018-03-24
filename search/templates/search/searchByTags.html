@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>imageX</title>
+    <link rel="stylesheet" href="style.css" type="text/css">
+</head>
+
+<body>
+<form action={% url 'searchImage' %} method ="get">
+  <div id="header" data-position="fixed">
+    <span>imageX</span>
+    <input type="text" name="searchItem" placeholder=' keyword'>
+      <input type="submit" value="Search"/>
+    <button class='top_right'> Log in </button>
+
+  </div>
+</form>
+
+
+
+  <h2 class="keyword">Keyword</h2>
+
+  <div id='naviBar'>
+    <div id='naviSub'>
+    	<span id='byMe'>Tags</span>
+    	<span id='byCate'>Category</span>
+    	<span id='byPhotographer'>Photographer</span>
+    </div>
+    <select class="middleRight">
+      <option>New</option>
+      <option>Popular</option>
+    </select>
+  </div>
+
+  {% if nothing %}
+  <div>
+      <p>Nothing Matches</p>
+  </div>
+{% endif %}
+
+{% if not nothing and  not list_images  %}
+  <div id='imageArea'>
+      {% for image in base_images %}
+    <div>
+      <img src='/media/{{image.image}}' height="150px" width="200px" >
+    </div>
+      {% endfor %}
+  </div>
+{% endif %}
+
+{% if list_images %}
+
+<div>
+{% if list_images.has_previous %}
+  <a href="?page={{ list_images.previous_page_number }}">Previous</a>
+  {% endif %}
+  Page {{ list_images.number }} of {{ list_images.paginator.num_pages }}.
+{% if list_images.has_next %}
+  <a href="?page={{ list_images.next_page_number }}">Next</a>
+{% endif %}
+</div>
+
+
+  <h2 class="results">results</h2>
+  <div>
+      {% for image in list_images.object_list %}
+        <p>{{image.tag}}</p>
+        <img src='/media/{{image.image}}' height="150px" width="200px" >
+      {% endfor %}
+  </div>
+  {% endif %}
+
+
+</body>
