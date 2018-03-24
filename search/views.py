@@ -7,7 +7,7 @@ from django.core.paginator import EmptyPage
 from django.core.paginator import PageNotAnInteger
 
 
-def searchImage(request):
+def searchImage(request, Username=None):
     limit = 2
     list_images = []
     base_images = Image.objects.order_by('uploaded_at')

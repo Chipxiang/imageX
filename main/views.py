@@ -8,7 +8,7 @@ from .models import Member
 
 def main(request):
 
-    return render(request, 'main/homepage.html',)
+    return render(request, 'main/home.html',)
 
 
 def register_view(request):
@@ -34,7 +34,7 @@ def register_view(request):
 
             auth.login(request, user)
 
-            return redirect('/main/?<>')
+            return redirect('/')
     else:
         context = {'isLogin': False}
 
@@ -54,7 +54,7 @@ def login_view(request):
 
                 auth.login(request,user)
                 request.session['username'] = username
-                return redirect('main/'+username+ '/upload')
+                return redirect('/User='+username+'/' )
             else:
 
                 context = {'isLogin': False,'pawd':False}
@@ -66,4 +66,4 @@ def login_view(request):
 def logout_view(request):
 
     auth.logout(request)
-    return redirect('/main/')
+    return redirect('')

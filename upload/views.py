@@ -21,7 +21,7 @@ def upload(request, Username):
             if( member ):
                 u.owner = member
             u.save()
-            return redirect('/main/')
+            return redirect('/User=' + Username + '/')
     else:
         form = ImageForm()
     return render(request, 'upload/model_form_upload.html', {'form': form ,'username': Username} )
