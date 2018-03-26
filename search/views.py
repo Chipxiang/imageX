@@ -7,6 +7,7 @@ from django.core.paginator import EmptyPage
 from django.core.paginator import PageNotAnInteger
 
 
+
 def searchImage(request, Username=None):
     limit = 2
     list_images = []
@@ -15,7 +16,8 @@ def searchImage(request, Username=None):
 
     if 'searchItem' in request.GET:
         keyword = request.GET['searchItem']
-        list_images = Image.objects.filter(tag=keyword)
+        list_images = Image.objects.filter(tag__icontains=keyword)
+        #list_images = Image.objects.filter(tag=keyword)
         if not list_images:
             nothing = True
         paginator = Paginator(list_images, limit)
