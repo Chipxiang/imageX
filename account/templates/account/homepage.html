@@ -32,25 +32,25 @@
     </div>
 
   <hr>
-<form action='search' >
+<form action="{% url "search:searchImage" %}" >
     <div class="Right">
       <button>Search</button>
     </div>
   <br>
 </form>
+<ul class="menu">
+      <li {% if section == "image" %}class="selected"{% endif %}><a href="{% url "image:upload" %}">Images</a></li>
+</ul>
 
-<form action="upload/">
-    <div class="Right">
-      <button>Upload</button>
-    </div>
-  <br>
-</form>
 
    <hr>
   <div id='imageArea'>
 
   </div>
-      <p>{{ Username}}</p>>
+      {% if request.user.username %}
+      <p>here</p>
+      <p>{{ request.user.username  }}</p>
+      {% endif %}
 
 
 </body>

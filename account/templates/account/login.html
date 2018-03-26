@@ -1,6 +1,6 @@
-<form action="{% url 'register' %}" method="post" accept-charset="utf-8"enctype="multipart/form-data" >
+<form action="." method="post" accept-charset="utf-8"enctype="multipart/form-data" >
    {% csrf_token %}
    <input type="text" name="username"id="username" placeholder="UserName" >
    <input type="password"  name="password" id="password" placeholder="Password" >
-   <input type="submit" class="submit" value="Register">
+   <input type="submit" class="submit" value="login">
  </form>

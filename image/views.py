@@ -1,10 +1,15 @@
 from django.shortcuts import render,redirect
+from django.contrib.auth.decorators import login_required
 from .forms import ImageForm
-from main.models import Image , Member
+from .models import Image
+from account.models import Member
+from django.urls import reverse
+from django.http import HttpResponseRedirect
 
-def upload(request, Username):
+@login_required
+def upload(request):
 
-    member = Member.objects.get(username=Username)
+    member = Member.objects.get(username=request.user.username)
     if request.method == 'POST':
         form = ImageForm(request.POST, request.FILES)
         if form.is_valid():
@@ -21,7 +26,9 @@ def upload(request, Username):
             if( member ):
                 u.owner = member
             u.save()
-            return redirect('/User=' + Username + '/')
+            return HttpResponseRedirect(reverse("account:dashboard"))
     else:
         form = ImageForm()
-    return render(request, 'upload/model_form_upload.html', {'form': form ,'username': Username} )
+    return render(request, 'ImageManagement/model_form_upload.html', {'form': form ,'username': request.user.username} )
+
+# def list(request):

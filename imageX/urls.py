@@ -19,16 +19,14 @@ from django.conf.urls import url
 from django.conf import settings
 from django.conf.urls.static import static
 
+
 urlpatterns = [
-    re_path('admin/', admin.site.urls),
+    url('admin/', admin.site.urls),
 
+    url(r'^$', include('search.urls',namespace="search")),
+    url(r'^image/', include('image.urls',namespace="image")),
+    url(r'^account/', include('account.urls',namespace="account")),
 
-    re_path(r'^User=(?P<Username>\w*)/$', include('UserInterface.urls')),
-    re_path(r'^User=(?P<Username>\w*)/upload/$', include('upload.urls')),
-    #re_path(r'User=(?P<Username>[^/]+)/search$', include('search.urls')),
-    re_path(r'search/', include('search.urls')),
-
-    re_path(r'', include('main.urls')),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
