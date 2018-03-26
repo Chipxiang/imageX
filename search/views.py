@@ -12,19 +12,35 @@ from django.core.paginator import PageNotAnInteger
 
 
 
+<<<<<<< HEAD
 
 
 
 
 def searchImage(request):
 
+=======
+def searchImage(request, Username=None):
+>>>>>>> 7df208185356dc73e5d819f2d20e1adb15281a51
     limit = 2
 
     list_images = []
+<<<<<<< HEAD
 
     base_images = Image.objects.order_by('-uploaded_at')
 
+=======
+    base_images = Image.objects.order_by('-uploaded_at')
+>>>>>>> 7df208185356dc73e5d819f2d20e1adb15281a51
     nothing = False
+    p=Paginator(base_images, limit)
+    page = request.GET.get('page')
+    try:
+        base_images = p.page(page)
+    except PageNotAnInteger:
+        base_images = p.page(1)
+    except EmptyPage:
+        base_images = p.page(paginator.num_pages)
 
     p=Paginator(base_images, limit)
 
@@ -47,11 +63,16 @@ def searchImage(request):
     if 'searchItem' in request.GET:
 
         keyword = request.GET['searchItem']
+<<<<<<< HEAD
 
         list_images = Image.objects.filter(tag__icontains=keyword).order_by('-uploaded_at')
 
         #list_images = Image.objects.filter(tag=keyword)
 
+=======
+        list_images = Image.objects.filter(tag__icontains=keyword).order_by('-uploaded_at')
+        #list_images = Image.objects.filter(tag=keyword)
+>>>>>>> 7df208185356dc73e5d819f2d20e1adb15281a51
         if not list_images:
 
             nothing = True

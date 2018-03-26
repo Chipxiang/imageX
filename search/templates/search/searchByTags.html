@@ -86,6 +86,7 @@
 
 {% if not nothing and  not list_images  %}
 
+<<<<<<< HEAD
 
 
 <div class="pagination">
@@ -124,6 +125,26 @@
 
 
 
+=======
+<div class="pagination">
+    <span class="step-links">
+        {% if base_images.has_previous %}
+            <a href="?page=1">&laquo; first</a>
+            <a href="?page={{ base_images.previous_page_number }}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ base_images.number }} of {{ base_images.paginator.num_pages }}.
+        </span>
+
+        {% if base_images.has_next %}
+            <a href="?page={{ base_images.next_page_number }}">next</a>
+            <a href="?page={{ base_images.paginator.num_pages }}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+>>>>>>> 7df208185356dc73e5d819f2d20e1adb15281a51
   <div id='imageArea'>
 
       {% for image in base_images %}
@@ -142,6 +163,7 @@
 
 
 
+<<<<<<< HEAD
 
 
 
@@ -190,6 +212,30 @@
 
 <!--
 
+=======
+{% if list_images %}
+
+<div class="pagination">
+    <span class="step-links">
+        {% if list_images.has_previous %}
+            <a href="?page=1&{% if request.GET.searchItem %}&searchItem={{ request.GET.searchItem }}{% endif %}">&laquo; first</a>
+
+            <a href="?page={{ list_images.previous_page_number }}&{% if request.GET.searchItem %}&searchItem={{ request.GET.searchItem }}{% endif %}">previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ list_images.number }} of {{ list_images.paginator.num_pages }}.
+        </span>
+
+        {% if list_images.has_next %}
+            <a href="?page={{ list_images.next_page_number }}&{% if request.GET.searchItem %}&searchItem={{ request.GET.searchItem }}{% endif %}">next</a>
+            <a href="?page={{ list_images.paginator.num_pages }}&{% if request.GET.searchItem %}&searchItem={{ request.GET.searchItem }}{% endif %}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+
+<!--
+>>>>>>> 7df208185356dc73e5d819f2d20e1adb15281a51
 <div>
 
 {% if list_images.has_previous %}
@@ -205,11 +251,15 @@
   <a href="?page={{ list_images.next_page_number }}">Next</a>
 
 {% endif %}
+<<<<<<< HEAD
 
 </div> -->
 
 
 
+=======
+</div> -->
+>>>>>>> 7df208185356dc73e5d819f2d20e1adb15281a51
 
 
   <h2 class="results">results</h2>
