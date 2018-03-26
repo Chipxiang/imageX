@@ -13,7 +13,15 @@ def searchImage(request, Username=None):
     list_images = []
     base_images = Image.objects.order_by('uploaded_at')
     nothing = False
-
+    p=Paginator(base_images, limit)
+    page = request.GET.get('page')
+    try:
+        base_images = p.page(page)
+    except PageNotAnInteger:
+        base_images = p.page(1)
+    except EmptyPage:
+        base_images = p.page(paginator.num_pages)
+        
     if 'searchItem' in request.GET:
         keyword = request.GET['searchItem']
         list_images = Image.objects.filter(tag__icontains=keyword)
