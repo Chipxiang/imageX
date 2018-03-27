@@ -19,7 +19,7 @@ class Image(models.Model):
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     description = models.CharField(max_length=20)
     tag = models.CharField(max_length=50)
-    image = models.ImageField(upload_to=user_directory_path,validators=[FileExtensionValidator(allowed_extensions=['jpg'])])
+    image = models.ImageField(upload_to=user_directory_path,validators=[FileExtensionValidator(allowed_extensions=['jpeg'])])
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

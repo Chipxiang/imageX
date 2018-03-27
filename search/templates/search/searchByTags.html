@@ -15,17 +15,21 @@
 
   </div>
 </form>
+{% if not  request.user.is_authenticated %}
 <form action={% url "account:login" %}>
     <input type="submit" value="Log in"/>
 
   </div>
 </form>
-<form>
+{% endif %}
+{% if  request.user.is_authenticated %}
+<form action={% url "account:logout" %}>
+    <input type="submit" value="Log out"/>
 
-   {% if not request.user %}
-  <p>{% if section == "Log in" %}class="selected"{% endif %}<a href="{% url "account:login" %}">Login</a></p>
-   {% endif %}
- </form>
+  </div>
+</form>
+{% endif %}
+
   <div id='naviBar'>
     <div id='naviSub'>
     	<span id='byMe'>Tags</span>
