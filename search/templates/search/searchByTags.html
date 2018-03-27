@@ -29,6 +29,13 @@
   </div>
 </form>
 {% endif %}
+{% if  request.user.is_authenticated %}
+<form action={% url "account:dashboard" %}>
+    <input type="submit" value="home"/>
+
+  </div>
+</form>
+{% endif %}
 
   <div id='naviBar'>
     <div id='naviSub'>

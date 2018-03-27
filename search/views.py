@@ -9,7 +9,7 @@ from django.core.paginator import PageNotAnInteger
 
 def searchImage(request):
 
-    limit = 2
+    limit = 1
     list_images = []
     base_images = Image.objects.order_by('-uploaded_at')
     nothing = False
