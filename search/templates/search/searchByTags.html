@@ -15,30 +15,11 @@
 
   </div>
 </form>
-{% if not request.user.is_authenticated %}
 <form action={% url "account:login" %}>
     <input type="submit" value="Log in"/>
 
   </div>
 </form>
-{% endif %}
-{% if request.user.is_authenticated %}
-<form action={% url "account:logout" %}>
-    <input type="submit" value="Log out"/>
-
-  </div>
-</form>
-{% endif %}
-{% if request.user.is_authenticated %}
-<form action={% url "account:dashboard" %}>
-    <input type="submit" value="home"/>
-
-  </div>
-</form>
-{% endif %}
-
-
-
 <form>
 
    {% if not request.user %}
@@ -56,12 +37,12 @@
       <option>Popular</option>
     </select>
   </div>
-{% if searchAction %}
+{% if nothing %}
   <div>
       <p>Nothing Matches</p>
   </div>
 {% endif %}
-{% if not searchAction and  not list_images  %}
+{% if not nothing and  not list_images  %}
 <div class="pagination">
 
     <span class="step-links">

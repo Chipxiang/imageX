@@ -10,8 +10,23 @@
 <span>imageX</span>
 <!--
   <div id="header" data-position="fixed">
+    <form action={% url "search:searchImage" %} method ="get">
+
+  <div id="header" data-position="fixed">
+
     <span>imageX</span>
+<<<<<<< HEAD
     <input type="text" name="searchKeyword" placeholder='keyword'>
+=======
+
+    <input type="text" name="searchItem" placeholder=' keyword'>
+
+    <input type="submit" value="Search"/>
+
+  </div>
+
+</form>
+>>>>>>> 2c2fdc5a5d161aae57d1998187dce667c3abf69f
     <span class='top_right'>Homepage</span>
   </div>-->
 
@@ -30,7 +45,10 @@
   <div id='userInfo'>
    <!-- <img src='ImageField/avatar.jpeg' id='avatar'>-->
     <div id='textInfo'>
-      <h1 id='name'>{{request.user.username}}</h1>
+
+      <h1 id='name'>{{ request.user.username  }}</h1>
+      <hr>
+      <p id='selfIntro'>a brief self introduction</p>
     </div>
   </div>
 
@@ -39,18 +57,18 @@
     	<span id='byTags'>Likes <span>999</span></span>
     </div>
 
+
   <hr>-->
 <ul class="menu">
     <a href="{% url "image:list" %}">Images</a></li>
     <h5> remaining # upload today: {{ member.upload_quota }}</h5>
     <h5> remaining # image to upload: {{ member.image_quota }}</h5>
+
+
 </ul>
 
 
-   <hr>
-  <div id='imageArea'>
 
-  </div>
 
 </body>
 </html>

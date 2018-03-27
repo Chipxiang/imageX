@@ -12,7 +12,7 @@ def searchImage(request):
     limit = 2
     list_images = []
     base_images = Image.objects.order_by('-uploaded_at')
-    searchAction = False
+    nothing = False
     p=Paginator(base_images, limit)
     page = request.GET.get('page')
     try:
@@ -27,7 +27,7 @@ def searchImage(request):
         keyword = request.GET['searchItem']
         list_images = Image.objects.filter(tag__icontains=keyword).order_by('-uploaded_at')
         if not list_images:
-            searchAction = True
+            nothing = True
         paginator = Paginator(list_images, limit)
         page = request.GET.get('page')
 
@@ -38,6 +38,6 @@ def searchImage(request):
         except EmptyPage:
            list_images = paginator.page(paginator.num_pages)
 
-    context = {'list_images':list_images, 'base_images':base_images,'searchAction':searchAction, }
+    context = {'list_images':list_images, 'base_images':base_images,'nothing':nothing, }
 
     return render(request, 'search/searchByTags.html', context)
