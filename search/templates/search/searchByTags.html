@@ -22,7 +22,7 @@
 
   <div id="header" data-position="fixed">
 
-    <span>imageX</span>
+    <span><h2>imageX<h2></span>
 
     <input type="text" name="searchItem" placeholder=' keyword'>
 
@@ -37,17 +37,6 @@
   <p>{% if section == "Log in" %}class="selected"{% endif %}<a href="{% url "account:login" %}">Login</a></p>
    {% endif %}
  </form>
-
-
-
-
-
-
-
-  <h2 class="keyword">Keyword</h2>
-
-
-
   <div id='naviBar'>
 
     <div id='naviSub'>
@@ -86,8 +75,6 @@
 
 {% if not nothing and  not list_images  %}
 
-
-
 <div class="pagination">
 
     <span class="step-links">
@@ -100,16 +87,11 @@
 
         {% endif %}
 
-
-
         <span class="current">
 
             Page {{ base_images.number }} of {{ base_images.paginator.num_pages }}.
 
         </span>
-
-
-
         {% if base_images.has_next %}
 
             <a href="?page={{ base_images.next_page_number }}">next</a>
@@ -154,21 +136,15 @@
 
             <a href="?page=1&{% if request.GET.searchItem %}&searchItem={{ request.GET.searchItem }}{% endif %}">&laquo; first</a>
 
-
-
             <a href="?page={{ list_images.previous_page_number }}&{% if request.GET.searchItem %}&searchItem={{ request.GET.searchItem }}{% endif %}">previous</a>
 
         {% endif %}
-
-
 
         <span class="current">
 
             Page {{ list_images.number }} of {{ list_images.paginator.num_pages }}.
 
         </span>
-
-
 
         {% if list_images.has_next %}
 
@@ -182,33 +158,16 @@
 
 </div>
 
-<div>
-
-{% if list_images.has_previous %}
-
-  <a href="?page={{ list_images.previous_page_number }}">Previous</a>
-
-  {% endif %}
-
-  Page {{ list_images.number }} of {{ list_images.paginator.num_pages }}.
-
-{% if list_images.has_next %}
-
-  <a href="?page={{ list_images.next_page_number }}">Next</a>
-
-{% endif %}
-
-</div> 
 
 
 
-  <h2 class="results">results</h2>
+  <h2 class="results">Search Results for {{ request.GET.searchItem }}</h2>
 
   <div>
 
       {% for image in list_images.object_list %}
 
-        <p>{{image.tag}}</p>
+        <p>Tag: {{image.tag}}</p>
 
         <img src='/media/{{image.image}}' height="150px" width="200px" >
 

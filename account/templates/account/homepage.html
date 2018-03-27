@@ -10,15 +10,26 @@
 <body>
 
   <div id="header" data-position="fixed">
+    <form action={% url "search:searchImage" %} method ="get">
+
+  <div id="header" data-position="fixed">
+
     <span>imageX</span>
-    <input type="text" name="searchKeyword" placeholder=' keyword'>
+
+    <input type="text" name="searchItem" placeholder=' keyword'>
+
+    <input type="submit" value="Search"/>
+
+  </div>
+
+</form>
     <span class='top_right'>Homepage</span>
   </div>
   
   <div id='userInfo'>
     <img src='ImageField/avatar.jpeg' id='avatar'>
     <div id='textInfo'>
-      <h1 id='name'>Username</h1>
+      <h1 id='name'>{{ request.user.username  }}</h1>
       <hr>
       <p id='selfIntro'>a brief self introduction</p>
     </div>
@@ -32,14 +43,8 @@
     </div>
 
   <hr>
-<form action="{% url "search:searchImage" %}" >
-    <div class="Right">
-      <button>Search</button>
-    </div>
-  <br>
-</form>
 <ul class="menu">
-      <li {% if section == "image" %}class="selected"{% endif %}><a href="{% url "image:upload" %}">Images</a></li>
+      <li {% if section == "image" %}class="selected"{% endif %}><a href="{% url "image:upload" %}">Upload</a></li>
 </ul>
 
 
@@ -48,7 +53,6 @@
 
   </div>
       {% if request.user.username %}
-      <p>here</p>
       <p>{{ request.user.username  }}</p>
       {% endif %}
 
