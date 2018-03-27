@@ -7,39 +7,43 @@
     <link rel="stylesheet" href="style.css" type="text/css">
 </head>
 
-<body>
-
+<span>imageX</span>
+<!--
   <div id="header" data-position="fixed">
     <span>imageX</span>
-    <input type="text" name="searchKeyword" placeholder=' keyword'>
+    <input type="text" name="searchKeyword" placeholder='keyword'>
     <span class='top_right'>Homepage</span>
-  </div>
-  
+  </div>-->
+
+<form action="{% url "account:logout" %}" >
+    <div class="Right">
+      <button>logout</button>
+    </div>
+  <br>
+</form>
+<form action="{% url "search:searchImage" %}" >
+    <div class="Right">
+      <button>search</button>
+    </div>
+  <br>
+</form>
   <div id='userInfo'>
-    <img src='ImageField/avatar.jpeg' id='avatar'>
+   <!-- <img src='ImageField/avatar.jpeg' id='avatar'>-->
     <div id='textInfo'>
-      <h1 id='name'>Username</h1>
-      <hr>
-      <p id='selfIntro'>a brief self introduction</p>
+      <h1 id='name'>{{request.user.username}}</h1>
     </div>
   </div>
 
-
-  <div id='naviBar'>
-    <div id='naviSub'>
+   <!-- <div id='naviSub'>
     	<span id='byTags'>Image <span>5</span></span>
     	<span id='byTags'>Likes <span>999</span></span>
     </div>
 
-  <hr>
-<form action="{% url "search:searchImage" %}" >
-    <div class="Right">
-      <button>Search</button>
-    </div>
-  <br>
-</form>
+  <hr>-->
 <ul class="menu">
-      <li {% if section == "image" %}class="selected"{% endif %}><a href="{% url "image:upload" %}">Images</a></li>
+    <a href="{% url "image:list" %}">Images</a></li>
+    <h5> remaining # upload today: {{ member.upload_quota }}</h5>
+    <h5> remaining # image to upload: {{ member.image_quota }}</h5>
 </ul>
 
 
@@ -47,10 +51,6 @@
   <div id='imageArea'>
 
   </div>
-      {% if request.user.username %}
-      <p>here</p>
-      <p>{{ request.user.username  }}</p>
-      {% endif %}
-
 
 </body>
+</html>

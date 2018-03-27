@@ -9,8 +9,8 @@ from .models import Member
 
 
 def dashboard(request):
-
-    return render(request, 'account/homepage.html',)
+    member = Member.objects.get(username=request.user.username)
+    return render(request, 'account/homepage.html', {'member':member})
 
 
 def user_register(request):
@@ -63,7 +63,8 @@ def user_login(request):
         context = {'isLogin': False, 'pswd':True}
     return render(request, 'account/login.html', context)
 
-def logout_view(request):
+def user_logout(request):
 
     auth.logout(request)
-    return redirect('')
+    #return HttpResponseRedirect(reverse("search:searchImage"))
+    return render(request, 'account/logout.html' )

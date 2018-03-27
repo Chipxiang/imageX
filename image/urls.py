@@ -4,6 +4,6 @@ from . import views
 app_name = 'image'
 
 urlpatterns = [
-    #re_path(r'^$', views.list, name="list"),
+    re_path(r'^$', views.list, name="list"),
     re_path(r'upload/', views.upload, name="upload"),
 ]

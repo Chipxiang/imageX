@@ -1,0 +1,36 @@
+<html>
+<body>
+<div>
+    <a href="{% url "image:upload" %}">Upload Images</a></li>
+</ul>
+
+{% if not list_images %}
+<p> no images </p>
+{% endif %}
+
+{% if list_images %}
+<div class="pagination">
+    <span class="step-links">
+        {% if list_images.has_previous %}
+            <a href="?page=1&{% if request.GET.searchItem %}&searchItem={{ request.GET.searchItem }}{% endif %}">&laquo; first</a>
+            <a href="?page={{ list_images.previous_page_number }}&{% if request.GET.searchItem %}&searchItem={{ request.GET.searchItem }}{% endif %}">previous</a>
+        {% endif %}
+
+        <span class="current">
+
+            Page {{ list_images.number }} of {{ list_images.paginator.num_pages }}.
+        </span>
+        {% if list_images.has_next %}
+            <a href="?page={{ list_images.next_page_number }}&{% if request.GET.searchItem %}&searchItem={{ request.GET.searchItem }}{% endif %}">next</a>
+            <a href="?page={{ list_images.paginator.num_pages }}&{% if request.GET.searchItem %}&searchItem={{ request.GET.searchItem }}{% endif %}">last &raquo;</a>
+        {% endif %}
+    </span>
+</div>
+  <div>
+      {% for image in list_images.object_list %}
+        <img src='/media/{{image.image}}' height="150px" width="200px" >
+      {% endfor %}
+  </div>
+  {% endif %}
+</body>
+</html>
