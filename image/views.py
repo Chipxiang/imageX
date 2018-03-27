@@ -15,6 +15,7 @@ def upload(request):
         if form.is_valid():
             description = form.cleaned_data['description']
             tag = form.cleaned_data['tag']
+            #image = ImageForm.clean_image()
             image = form.cleaned_data['image']
             #category = form.cleaned_data['category']
             u = Image()

@@ -1,6 +1,7 @@
 from django.db import models
 from django.utils import timezone
 from account.models import Member
+from django.core.validators import FileExtensionValidator
 
 def user_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
@@ -18,7 +19,7 @@ class Image(models.Model):
     #category = models.ForeignKey(Category, on_delete=models.CASCADE, default='imageX')
     description = models.CharField(max_length=20)
     tag = models.CharField(max_length=50)
-    image = models.ImageField(upload_to=user_directory_path, default='media/no_image.jpg')
+    image = models.ImageField(upload_to=user_directory_path,validators=[FileExtensionValidator(allowed_extensions=['jpeg'])])
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
