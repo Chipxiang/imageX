@@ -3,9 +3,9 @@ from django.utils import timezone
 from account.models import Member
 from django.core.validators import FileExtensionValidator
 
-def user_directory_path(instance):
+def user_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
-    return '{0}_{1}'.format(instance.title, instance.tag)
+    return '{0}_{1}'.format(instance.title, filename)
 
 class Category(models.Model):
     text = models.CharField(max_length=20)
