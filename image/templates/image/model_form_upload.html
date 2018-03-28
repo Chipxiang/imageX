@@ -5,5 +5,8 @@
     {{ form.as_p }}
     <button type="submit">Upload</button>
   </form>
+<form action="{% url 'account:dashboard'%}">
+    <button type="submit">Cancel</button>
+  </form>
 
 {% endblock %}
