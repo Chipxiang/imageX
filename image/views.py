@@ -50,3 +50,4 @@ def list(request):
           list_images = paginator.page(paginator.num_pages)
 
     return render(request, "image/list.html", {'list_images':list_images} )
+#def viewImage(request):

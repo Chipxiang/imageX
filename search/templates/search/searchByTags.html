@@ -54,15 +54,15 @@
       <option>Popular</option>
     </select>
   </div>
-{% if request.GET.searchItem  %}
+<!--{% if request.GET.searchItem  %}
   <h2 class="results">Search Results for {{ request.GET.searchItem }}</h2>
-{% endif %}
-{% if nothing %}
+{% endif %}-->
+{% if searchAction %}
   <div>
       <p>Nothing Matches</p>
   </div>
 {% endif %}
-{% if not nothing and  not list_images  %}
+{% if not searchAction and  not list_images  %}
 <div class="pagination">
 
     <span class="step-links">
@@ -115,7 +115,8 @@
 
   <div>
       {% for image in list_images.object_list %}
-        <p>Tag: {{image.tag}}</p>
+        <!--<p>Tag: {{image.tag}}</p>-->
+        <a href="{{image.image.url}}" target="_blank">
         <img src='/media/{{image.image}}' height="150px" width="200px" >
       {% endfor %}
   </div>
