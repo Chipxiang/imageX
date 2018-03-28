@@ -3,11 +3,10 @@ from django.utils import timezone
 from account.models import Member
 from django.core.validators import FileExtensionValidator
 
-def user_directory_path(instance, filename):
-
+def user_directory_path(instance):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
+    return '{0}_{1}'.format(instance.title, instance.tag)
 
-    return '{0}_{1}'.format(instance.tag, filename)
 class Category(models.Model):
     text = models.CharField(max_length=20)
     def __str__(self):
@@ -15,6 +14,7 @@ class Category(models.Model):
 
 
 class Image(models.Model):
+    title = models.CharField(max_length=50)
     owner = models.ForeignKey(Member, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     description = models.CharField(max_length=20)
@@ -23,4 +23,4 @@ class Image(models.Model):
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
-        return self.tag
+        return self.title

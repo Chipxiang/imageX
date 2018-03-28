@@ -5,5 +5,5 @@ from django import forms
 class ImageForm(forms.ModelForm):
     class Meta:
         model = Image
-        fields = ('description', 'tag', 'category','image')
+        fields = ('title','description', 'tag', 'category','image')
 

@@ -22,6 +22,12 @@
   </div>
 </form>
 {% endif %}
+{% if not request.user.is_authenticated %}
+<form action={% url "account:register" %}>
+    <input type="submit" value="Register"/>
+  </div>
+</form>
+{% endif %}
 {% if  request.user.is_authenticated %}
 <form action={% url "account:logout" %}>
     <input type="submit" value="Log out"/>

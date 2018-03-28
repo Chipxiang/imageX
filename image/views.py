@@ -20,7 +20,7 @@ def upload(request):
               tag = form.cleaned_data['tag']
               image = form.cleaned_data['image']
               category = form.cleaned_data['category']
-              u = Image(tag=tag,description=description,
+              u = Image(title=title, tag=tag,description=description,
                       category=category, image=image,owner=member)
               u.save()
               member.image_quota = member.image_quota - 1
