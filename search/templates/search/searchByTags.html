@@ -54,6 +54,9 @@
       <option>Popular</option>
     </select>
   </div>
+{% if request.GET.searchItem  %}
+  <h2 class="results">Search Results for {{ request.GET.searchItem }}</h2>
+{% endif %}
 {% if nothing %}
   <div>
       <p>Nothing Matches</p>
@@ -90,6 +93,7 @@
       {% endfor %}
   </div>
 {% endif %}
+
 {% if list_images %}
 <div class="pagination">
     <span class="step-links">
@@ -108,7 +112,7 @@
         {% endif %}
     </span>
 </div>
-  <h2 class="results">Search Results for {{ request.GET.searchItem }}</h2>
+
   <div>
       {% for image in list_images.object_list %}
         <p>Tag: {{image.tag}}</p>
