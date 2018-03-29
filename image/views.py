@@ -34,6 +34,7 @@ def upload(request):
     else:
         return HttpResponse("no quota")
 
+@login_required
 def list(request):
     limit = 10
     member=Member.objects.get(username=request.user.username)
@@ -50,4 +51,12 @@ def list(request):
           list_images = paginator.page(paginator.num_pages)
 
     return render(request, "image/list.html", {'list_images':list_images} )
-#def viewImage(request):
+
+def view(request , filename):
+    image = Image.objects.get(image=filename)
+
+    return render(request , "image/view.html",{'image':image} )
+
+
+
+

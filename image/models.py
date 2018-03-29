@@ -14,12 +14,13 @@ class Category(models.Model):
 
 
 class Image(models.Model):
+    likes = models.IntegerField(default=0)
     title = models.CharField(max_length=50)
     owner = models.ForeignKey(Member, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     description = models.CharField(max_length=20)
     tag = models.CharField(max_length=50)
-    image = models.ImageField(upload_to=user_directory_path,validators=[FileExtensionValidator(allowed_extensions=['jpeg'])])
+    image = models.ImageField(upload_to=user_directory_path,validators=[FileExtensionValidator(allowed_extensions=['jpg'])])
     uploaded_at = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):

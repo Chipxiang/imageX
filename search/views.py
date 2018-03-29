@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import HttpResponse
 from image.models import Image
 from .forms import SearchForm
 from django.core.paginator import Paginator
@@ -9,7 +10,7 @@ from django.core.paginator import PageNotAnInteger
 
 def searchImage(request):
 
-    limit = 1
+    limit = 2
     list_images = []
     base_images = Image.objects.order_by('-uploaded_at')
     searchAction = False
@@ -44,3 +45,8 @@ def searchImage(request):
     context = {'list_images':list_images, 'base_images':base_images,'searchAction':searchAction, }
 
     return render(request, 'search/searchByTags.html', context)
+
+
+def viewImage(request , filename):
+
+    return HttpResponse("hello")
