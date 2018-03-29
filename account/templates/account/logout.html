@@ -1,12 +1,10 @@
 
 {% block content %}
+
 <h1>Logged out</h1>
-<p>You have been successfully logged out. You can
-    <a href="{% url 'account:login' %}">log-in again</a>.
-</p>
-<p>go to
-    <a href="{% url 'search:searchImage' %}">imageX</a>.
-</p>
+<p>You have been successfully logged out. You can <a href="{% url 'account:login' %}">log-in again</a>.</p>
+<p>go to <a href="{% url 'search:searchImage' %}">imageX</a>.</p>
+
 {% endblock %}
 
 

@@ -1,47 +1,60 @@
+{% load static %}
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>imageX</title>
-    <link rel="stylesheet" href="style.css" type="text/css">
+    <link rel="stylesheet" href="{% static 'search/style.css'%}" type="text/css">
+
+<script type="text/javascript">
+
+function toSearch(){
+    location.href="{% url 'search:searchImage' %}";
+}
+function toLogin(){
+    location.href="{% url 'account:login' %}";
+}
+function toRegister(){
+    location.href="{% url 'account:register' %}";
+}
+function toLogout(){
+    location.href="{% url 'account:logout' %}";
+}
+function toHomepage(){
+    location.href="{% url 'account:dashboard' %}";
+}
+
+</script>
+
 </head>
+
 <body>
-<form action={% url "search:searchImage" %} method ="get">
+
   <div id="header" data-position="fixed">
-    <span><h2>imageX<h2></span>
-    <input type="text" name="searchItem" placeholder=' keyword'>
-    <input type="submit" value="Search"/>
+    <span onclick="toSearch()">imageX</span>
+    <form action="{% url 'search:searchImage'%}">
+      <input type="text" name="searchItem" placeholder=' keyword'>
+    </form>
 
-  </div>
-</form>
-{% if not  request.user.is_authenticated %}
-<form action={% url "account:login" %}>
-    <input type="submit" value="Log in"/>
+    {% if not request.user.is_authenticated %}
+    <button onclick="toLogin()">Login</button>
+    {% endif %}
 
-  </div>
-</form>
-{% endif %}
-{% if not request.user.is_authenticated %}
-<form action={% url "account:register" %}>
-    <input type="submit" value="Register"/>
-  </div>
-</form>
-{% endif %}
-{% if  request.user.is_authenticated %}
-<form action={% url "account:logout" %}>
-    <input type="submit" value="Log out"/>
+    {% if not request.user.is_authenticated %}
+    <button onclick="toRegister()">Register</button>
+    {% endif %}
 
-  </div>
-</form>
-{% endif %}
-{% if  request.user.is_authenticated %}
-<form action={% url "account:dashboard" %}>
-    <input type="submit" value="home"/>
+    {% if  request.user.is_authenticated %}
+    <button onclick="toLogout()">Log out</button>
+    {% endif %}
 
-  </div>
-</form>
-{% endif %}
+    {% if  request.user.is_authenticated %}
+    <span onclick="toHomepage">Homepage</span>
+    {% endif %}
+
+  </div><br>
+
 
   <div id='naviBar'>
     <div id='naviSub'>
@@ -112,7 +125,7 @@
             <a href="?page={{ list_images.paginator.num_pages }}&{% if request.GET.searchItem %}&searchItem={{ request.GET.searchItem }}{% endif %}">last &raquo;</a>
         {% endif %}
     </span>
-</div>
+</div><br>
 
   <div>
       {% for image in list_images.object_list %}
