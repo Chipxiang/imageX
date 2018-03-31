@@ -1,14 +1,24 @@
 <html>
+<script type="text/javascript">
+function likeImage(){
+	alert("this is a pseudo function");
+}
+</script>
+
 <body>
-<div>
 
-
+  <div>
     <img src='/media/{{image.image}}' height="200px" width="300px" >
     <ul>
-        <li> title : {{image.title}}</li>
-        <li> tags : {{image.tag}}</li>
-        <li> photographer : {{image.owner.username}}</li>
-        <li> likes : {{image.likes}}</li>
-</div>
+      <li> title : {{image.title}}</li>
+      <li> tags : {{image.tag}}</li>
+      <li> photographer : {{image.owner.username}}</li>
+      <li> likes : {{image.likes}}</li>
+
+      {% if  request.user.is_authenticated %}
+      <li><button onclick="likeImage();">Like</button></li>
+      {% endif %}
+  </div>
+
 </body>
 </html>
