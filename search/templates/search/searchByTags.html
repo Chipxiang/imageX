@@ -50,7 +50,7 @@ function toHomepage(){
     {% endif %}
 
     {% if  request.user.is_authenticated %}
-    <span onclick="toHomepage">Homepage</span>
+    <span onclick="toHomepage()">Homepage</span>
     {% endif %}
 
   </div><br>
@@ -100,7 +100,7 @@ function toHomepage(){
       {% for image in base_images %}
     <div>
          <a href="{% url 'image:view' image.image %}">
-        <img src='/media/{{image.image}}' height="200px" width="300px" >
+	 <img src= "media/{{image.image}}" height="200px" width="300px" >
 
     </div>
 

@@ -1,8 +1,8 @@
-import os
-os.environ.setdefault("DJANGO_SETTINGS_MODULE", "imageX.settings")
+#import os
+#os.environ.setdefault("DJANGO_SETTINGS_MODULE", "imageX.settings")
 
-import django
-django.setup()
+#import django
+#django.setup()
 
 from image.models import Category
 
