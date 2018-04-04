@@ -1,6 +1,7 @@
-<html>
+{% extends "base.html" %}
+{% block title %}Your images{% endblock %}
+{% block content %}
 <body>
-<div>
     <a href="{% url "image:upload" %}">Upload Images</a></li>
 </ul>
 
@@ -33,4 +34,4 @@
   </div>
   {% endif %}
 </body>
-</html>
+{% endblock %}

@@ -1,10 +1,42 @@
-{% load static %}
-<!DOCTYPE html>
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+  <h1>Dashboard</h1>
+  <p>Welcome to your dashboard.</p>
+<script type="text/javascript">
+function toSearch(){
+  location.href="{% url 'search:search' %}";
+}
+function toLogout(){
+  location.href="{% url 'account:logout' %}"
+}
+</script>
+<body>
+
+  <div class="header">
+    <span onclick="toSearch()"></span>
+    <form action="{% url 'search:search'%}">
+      <input type="text" name="searchItem" placeholder=' keyword'>
+
+    </form>
+  </div>
+
+
+   <!-- <img src='ImageField/avatar.jpeg' id='avatar'>-->
+
+  <h5> remaining # upload today: {{ member.upload_quota }}</h5>
+  <h5> remaining # image to upload: {{ member.image_quota }}</h5>
+
+{% endblock %}
+
+
+<!--<!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>imageX</title>
+    {% load static %}
     <link rel="stylesheet" href="{% static 'account/style.css'%}" type="text/css">
 
 <script type="text/javascript">
@@ -30,8 +62,8 @@ function toLogout(){
   </div>
 
   <div id='userInfo'>
-   <!-- <img src='ImageField/avatar.jpeg' id='avatar'> -->
-    <div id='textInfo'>
+   <!-- <img src='ImageField/avatar.jpeg' id='avatar'>-->
+   <!-- <div id='textInfo'>
       <h1 id='name'>{{ request.user.username  }}</h1>
       <hr>
       <p id='selfIntro'>a brief self introduction</p>

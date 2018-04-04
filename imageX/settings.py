@@ -31,16 +31,19 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 
 INSTALLED_APPS = [
+
+    'imageX',
+
+    'search',
+    'account',
+    'image',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
-    'search',
-    'account',
-    'image',
 
 
 ]
@@ -56,7 +59,9 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'imageX.urls'
-
+TEMPLATE_DIRS = [
+    os.path.join(BASE_DIR, 'templates')
+]
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -127,4 +132,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 

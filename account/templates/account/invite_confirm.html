@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block title %}Join ImageX{% endblock %}
+{% block content %}
+<h1>Create a user</h1>
+{% if validlink %}
+<p>Please enter your new username and password</p>
+<form action="." method="post">
+    {{ form.as_p }}
+    {% csrf_token %}
+    <p><input type="submit" value="create" /></p>
+</form> {% else %}
+<p>The invitation link was invalid, possibly because it has already been used.</p>
+{% endif %}
+{% endblock %}
+
+

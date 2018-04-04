@@ -8,6 +8,7 @@ from django.core.paginator import PageNotAnInteger
 
 
 
+
 def searchImage(request):
 
     limit = 2
@@ -44,7 +45,7 @@ def searchImage(request):
 
     context = {'list_images':list_images, 'base_images':base_images,'searchAction':searchAction, }
 
-    return render(request, 'search/searchByTags.html', context)
+    return render(request, 'search/search.html', context)
 
 
 def viewImage(request , filename):

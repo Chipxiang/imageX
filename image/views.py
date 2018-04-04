@@ -50,7 +50,7 @@ def list(request):
        except EmptyPage:
           list_images = paginator.page(paginator.num_pages)
 
-    return render(request, "image/list.html", {'list_images':list_images} )
+    return render(request, "image/list.html", {'list_images':list_images})
 
 def view(request , filename):
     image = Image.objects.get(image=filename)
