@@ -95,6 +95,7 @@ def invite_newmemeber(request,
                 'html_email_template_name': html_email_template_name,
             }
 
+
             form.save(**opts)
             return HttpResponseRedirect(post_reset_redirect)
     else:
@@ -117,10 +118,11 @@ def invite_confirm(request, token=None,
                     token_generator=modified_token_generator,
                      ):
 
-
+        email = None
         assert token is not None
+        if request.session.has_key('email'):
+              email = request.session['email']
         auth.logout(request)
-
         post_reset_redirect = reverse('search:search')
         form = None
         if token_generator.check_token(token):
@@ -137,8 +139,13 @@ def invite_confirm(request, token=None,
                     if member:
                         return HttpResponse("already exits")
 
-                    member = Member.objects.create_user(username=username, password=password)
+                    member = Member.objects.create_user(username=username,
+                                                        password=password, email=email)
                     member.save()
+
+                    return HttpResponseRedirect(post_reset_redirect)
+
+
 
         else:
             validlink = False
@@ -148,8 +155,6 @@ def invite_confirm(request, token=None,
             'title': title,
             'validlink': validlink,
         }
-
-
         return TemplateResponse(request, template_name, context)
 
 

@@ -53,6 +53,7 @@ class InvitationForm(forms.Form):
         """
 
         email = self.cleaned_data["email"]
+        request.session["email"] = email
         if request.user:
             if not domain_override:
                 current_site = get_current_site(request)
