@@ -8,6 +8,8 @@
     {% load static %}
     <link href="{% static "base.css" %}" rel="stylesheet">
 </head>
+
+
 <body>
 <div id="header">
     <span class="logo">ImageX</span>
@@ -23,7 +25,7 @@
         <a href="{% url 'search:search' %}">Search</a>
         </li>
          <li {% if section == "invite" %}class="selected"{% endif %}>
-        <a href="{% url 'account:invite' %}">invite</a>
+        <a href="{% url 'account:invite' %}">Invite</a>
         </li>
         <!--<li {% if section == "people" %}class="selected"{% endif %}>
         <a href="#">People</a>
@@ -39,13 +41,42 @@
         {% endif %}
     </span>
 </div>
-
-
+{% if messages %}
+    <ul class="messages">
+        {% for message in messages %}
+        <li class="{{ message.tags }}">
+            {{ message|safe }}
+            <a href="#" class="close"> </a>
+        </li> {% endfor %}
+    </ul>
+{% endif %}
 
 <div id="content">
     {% block content %}
     {% endblock %}
 </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src=" http://cdn.jsdelivr.net/jquery.cookie/1.4.1/jquery.cookie.min.js "></script>
+    <script>
+        var csrftoken = $.cookie('csrftoken');
+        function csrfSafeMethod(method) {
+            // these HTTP methods do not require CSRF protection
+            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+        }
+        $.ajaxSetup({
+            beforeSend: function(xhr, settings) {
+                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
+                }
+            }
+        });
+
+        $(document).ready(function(){
+            {% block domready %}
+            {% endblock %}
+		});
+    </script>
+
 </body>
 </html>
 

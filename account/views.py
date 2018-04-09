@@ -5,12 +5,14 @@ from django.urls import reverse ,reverse_lazy
 from django.http import HttpResponseRedirect
 from django.contrib.auth import authenticate
 from .forms import LoginForm,InvitationForm
-from .models import Member
+from .models import Member, Profile
 from django.http import HttpResponseRedirect
 from django.template.response import TemplateResponse
 from django.utils.translation import ugettext as _
-from .forms import RegisterForm
+from .forms import RegisterForm,UserEditForm, ProfileEditForm
 from .token_generator import modified_token_generator
+from django.contrib.auth.decorators import login_required
+from django.contrib import messages
 
 def dashboard(request):
     member = Member.objects.get(username=request.user.username)
@@ -103,6 +105,7 @@ def invite_newmemeber(request,
     context = {
         'form': form,
         'title': _('Password reset'),
+        'section': 'invite'
     }
 
     return TemplateResponse(request, template_name, context)
@@ -138,14 +141,12 @@ def invite_confirm(request, token=None,
 
                     if member:
                         return HttpResponse("already exits")
-
                     member = Member.objects.create_user(username=username,
                                                         password=password, email=email)
+                    profile = Profile.objects.create(user=member)
                     member.save()
-
+                    profile.save()
                     return HttpResponseRedirect(post_reset_redirect)
-
-
 
         else:
             validlink = False
@@ -156,6 +157,30 @@ def invite_confirm(request, token=None,
             'validlink': validlink,
         }
         return TemplateResponse(request, template_name, context)
+
+
+@login_required
+def edit(request):
+    if request.method == 'POST':
+        user_form = UserEditForm(instance=request.user, data=request.POST)
+        profile_form = ProfileEditForm(instance=request.user.profile, data=request.POST, files=request.FILES)
+        if user_form.is_valid() and profile_form.is_valid():
+            user_form.save()
+            profile_form.save()
+            messages.success(request, 'Profile updated ' \
+                                      'successfully')
+        else:
+            messages.error(request, 'Error updating your profile')
+
+
+    else:
+        user_form = UserEditForm(instance=request.user)
+        profile_form = ProfileEditForm(instance=request.user.profile)
+
+    return render(request, 'account/edit.html', {'user_form': user_form, 'profile_form': profile_form})
+
+
+
 
 
 PASSWORD_EMAIL_SENDER = 'noreply@hola-inc.top'

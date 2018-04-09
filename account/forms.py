@@ -9,6 +9,7 @@ from django.utils.http import urlsafe_base64_encode
 from django.utils.translation import ugettext, ugettext_lazy as _
 from .models import Member
 from .token_generator import modified_token_generator
+from .models import Profile
 
 class RegisterForm(forms.Form):
     username = forms.CharField()
@@ -18,6 +19,16 @@ class LoginForm(forms.Form):
 
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
+
+class UserEditForm(forms.ModelForm):
+    class Meta:
+        model = Member
+        fields = ('name', 'email')
+
+class ProfileEditForm(forms.ModelForm):
+    class Meta:
+        model = Profile
+        fields = ('date_of_birth', 'avatar')
 
 
 class InvitationForm(forms.Form):

@@ -1,5 +1,5 @@
 from django.conf.urls import url
-from django.urls import reverse_lazy
+from django.urls import reverse_lazy,reverse
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.views import password_change
 from django.contrib.auth.views import password_change_done
@@ -17,11 +17,16 @@ urlpatterns = [
     url(r'^logout/$', views.user_logout, name='logout'),
     url(r'^invite/$', views.invite_newmemeber, name='invite'),
     url(r'^invite/done$', views.invite_done, name='invite_done'),
+    url(r'^edit/$', views.edit, name='edit'),
 
     url(r'^invite/confirm/(?P<token>[-\w]+)/$', views.invite_confirm, name='invite_confirm'),
 
-    url(r'^password-change/$', password_change,
-       name='password_change'),
+    url(r'^password-change/$', lambda request, **kwargs: password_change(
+        request, template_name='registration/password_change_form.html',
+        post_change_redirect = reverse('account:password_change_done')
+
+        ),
+        name='password_change'),
 
     url(r'^password-change/done/$', password_change_done,
         name='password_change_done'),

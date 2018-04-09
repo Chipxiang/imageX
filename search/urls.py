@@ -4,8 +4,5 @@ from django.conf.urls import url
 
 app_name = "search"
 urlpatterns = [
-
-    url(r'', views.searchImage, name='search'),
-   # url(r'^(?P<filename>.*)', views.viewImage, name="viewImage"),
-
+    url(r'', views.search, name='search'),
 ]

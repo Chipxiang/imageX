@@ -5,11 +5,9 @@ from .forms import SearchForm
 from django.core.paginator import Paginator
 from django.core.paginator import EmptyPage
 from django.core.paginator import PageNotAnInteger
-
-
-
-
-def searchImage(request):
+from django.contrib import messages
+'''
+def search(request):
 
     limit = 2
     list_images = []
@@ -43,11 +41,39 @@ def searchImage(request):
         else:
             searchAction = False
 
-    context = {'list_images':list_images, 'base_images':base_images,'searchAction':searchAction, }
+    context = {'list_images':list_images, 'base_images':base_images,'searchAction':searchAction, 'section': 'search'}
 
     return render(request, 'search/search.html', context)
+'''
+def search(request):
+    images = Image.objects.all()
+
+    if 'searchItem' in request.GET:
+        keyword = request.GET['searchItem']
+        if keyword != None :
+           images = Image.objects.filter(tag__icontains=keyword).order_by('-uploaded_at')
+           if not images:
+               messages.error(request, 'No image matches your request')
+
+    paginator = Paginator(images, 8)
+    page = request.GET.get('page')
+    try:
+        images = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer deliver the first page
+        images = paginator.page(1)
+    except EmptyPage:
+        if request.is_ajax():
+            # If the request is AJAX and the page is out of range return an empty page
+            return HttpResponse('')
+        # If page is out of range deliver last page of results
+        images = paginator.page(paginator.num_pages)
+    if request.is_ajax():
+        return render(request,
+                      'image/list_ajax.html',
+                      {'section': 'search', 'images': images,})
+    return render(request,
+                  'image/list_new.html',
+                  {'section': 'search', 'images': images,})
 
 
-def viewImage(request , filename):
-
-    return HttpResponse("hello")
