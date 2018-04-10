@@ -17,13 +17,11 @@ class Category(models.Model):
 
 
 class Image(models.Model):
-    #likes = models.IntegerField(default=0)
     users_like = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='images_liked', blank=True)
     title = models.CharField(max_length=50)
     owner = models.ForeignKey(Member, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     description = models.CharField(max_length=20)
-    #tag = models.CharField(max_length=50)
     tag = models.SlugField(max_length=200, blank=True)
     image = models.ImageField(upload_to=user_directory_path,validators=[FileExtensionValidator(allowed_extensions=['jpg','jpeg'])])
     uploaded_at = models.DateTimeField(auto_now_add=True, db_index=True)

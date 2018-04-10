@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'search',
     'account',
     'image',
-    'sorl.thumbnail',
+    #'sorl.thumbnail',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',

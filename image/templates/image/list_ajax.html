@@ -1,12 +1,11 @@
-{% load thumbnail %}
+
 {% for image in images %}
     <div class="image">
         <a href="{{ image.get_absolute_url }}">
-           {% thumbnail image.image "300" as im %}
                 <a href="{{ image.get_absolute_url }}">
-                    <img src="{{im.url}}">
+                    <img src='/media/{{image.image}}' height="150px" width="200px" >
                 </a>
-            {% endthumbnail %}
+
         </a>
         <div class="info">
             <a href="{{ image.get_absolute_url }}" class="title">{{ image.title }}</a>
