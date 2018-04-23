@@ -9,9 +9,16 @@
     {% endif %}
 
     {% if section == 'search'%}
-    <form action="{% url 'search:search'%}">
+<div>
+    <form action="{% url 'search:search'%}" method="post" enctype="multipart/form-data">
+    {{ form.as_p }}
+    {% csrf_token %}
+    <p><input type="submit" value="Search"></p>
+   </form>
+</div>
+   <!-- <form action="{% url 'search:search'%}">
       <input type="text" name="searchItem" placeholder=' keyword'> <input type="Submit" value="search">
-    </form>
+    </form>-->
     {% endif %}
     <div id="image-list">
         {% include "image/list_ajax.html" %}

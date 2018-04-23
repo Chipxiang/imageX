@@ -46,14 +46,31 @@ def search(request):
     return render(request, 'search/search.html', context)
 '''
 def search(request):
-    images = Image.objects.all()
+    images = Image.objects.all().order_by('-uploaded_at')
+    form = SearchForm(request.POST)
+    if form.is_valid():
+        cd = form.cleaned_data
+        keyword = cd['keyword']
+        orderType = cd['orderType']
+        searchType=cd['searchType']
+        form.save()
+        if searchType == 'Tag':
+            if orderType == 'Time':
+                images = Image.objects.filter(tag__icontains=keyword).order_by('-uploaded_at')
+            else:
+                images = Image.objects.filter(tag__icontains=keyword).order_by('-user_likes')
+        if searchType == 'Photographer':
+            if orderType == 'Time':
+                images = Image.objects.filter(tag__icontains=keyword).order_by('-uploaded_at')
+            else:
+                images = Image.objects.filter(tag__icontains=keyword).order_by('-user_likes')
 
-    if 'searchItem' in request.GET:
-        keyword = request.GET['searchItem']
-        if keyword != None :
-           images = Image.objects.filter(tag__icontains=keyword).order_by('-uploaded_at')
-           if not images:
-               messages.error(request, 'No image matches your request')
+    #if 'searchItem' in request.GET:
+       # keyword = request.GET['searchItem']
+        #if keyword != None :
+          # images = Image.objects.filter(tag__icontains=keyword).order_by('-uploaded_at')
+           #if not images:
+            #   messages.error(request, 'No image matches your request')
 
     paginator = Paginator(images, 8)
     page = request.GET.get('page')
@@ -72,8 +89,10 @@ def search(request):
         return render(request,
                       'image/list_ajax.html',
                       {'section': 'search', 'images': images,})
+    context = {
+        'section': 'search', 'images': images, 'form': SearchForm,
+    }
     return render(request,
-                  'image/list_new.html',
-                  {'section': 'search', 'images': images,})
+                  'image/list_new.html', context)
 
 

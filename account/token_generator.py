@@ -3,14 +3,11 @@ from django.conf import settings
 from django.utils.crypto import constant_time_compare, salted_hmac
 from django.utils.http import base36_to_int, int_to_base36
 
-
 class PasswordResetTokenGenerator:
     secret = settings.SECRET_KEY
     def make_token(self):
 
         return self._make_token_with_timestamp(self._num_days(self._today()))
-
-
 
     def check_token(self,token):
 
@@ -26,8 +23,6 @@ class PasswordResetTokenGenerator:
 
             return False
 
-
-
         try:
 
             ts = base36_to_int(ts_b36)
@@ -35,8 +30,6 @@ class PasswordResetTokenGenerator:
         except ValueError:
 
             return False
-
-
 
         # Check that the timestamp/uid has not been tampered with
 
