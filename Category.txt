@@ -1,21 +1,20 @@
- Abstract
- Aerial
- Animals
- Architecture
- Black and White
- Family
- Fashion
- Fine Art
- Food
- Journalism
- Landscape
- Macro
- Nature
- Night
- People
- Performing Arts
- Sport
- Still Life
- Street
- Travel.
-
+Abstract
+Aerial
+Animals
+Architecture
+Black and White
+Family
+Fashion
+Fine Art
+Food
+Journalism
+Landscape
+Macro
+Nature
+Night
+People
+Performing Arts
+Sport
+Still Life
+Street
+Travel

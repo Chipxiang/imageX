@@ -1,7 +1,7 @@
 from django import forms
 from image.models import Image
 
-SearchType_CHOICES = [('Tag','tag'),('Photographer','photographer'),('Gallery','gallery')]
+SearchType_CHOICES = [('Tag','tag'),('Photographer','photographer'),('Category','category')]
 OrderType_CHOICES = [('Time','time'),('Popularity','popularity')]
 class SearchForm(forms.Form):
      searchType = forms.ChoiceField(

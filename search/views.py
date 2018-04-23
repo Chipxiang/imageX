@@ -56,15 +56,19 @@ def search(request):
         form.save()
         if searchType == 'Tag':
             if orderType == 'Time':
-                images = Image.objects.filter(tag__icontains=keyword).order_by('-uploaded_at')
+                images = Image.objects.filter(tag__iexact=keyword).order_by('-uploaded_at')
             else:
-                images = Image.objects.filter(tag__icontains=keyword).order_by('-user_likes')
+                images = Image.objects.filter(tag__iexact=keyword).order_by('-user_likes')
         if searchType == 'Photographer':
             if orderType == 'Time':
-                images = Image.objects.filter(tag__icontains=keyword).order_by('-uploaded_at')
+                images = Image.objects.filter(owner__username__iexact=keyword).order_by('-uploaded_at')
             else:
-                images = Image.objects.filter(tag__icontains=keyword).order_by('-user_likes')
-
+                images = Image.objects.filter(owner__username__iexact=keyword).order_by('-user_likes')
+        if searchType == 'Category':
+            if orderType == 'Time':
+                images = Image.objects.filter(category__text__iexact=keyword).order_by('-uploaded_at')
+            else:
+                images = Image.objects.filter(category__text__iexact=keyword).order_by('-user_likes')
     #if 'searchItem' in request.GET:
        # keyword = request.GET['searchItem']
         #if keyword != None :

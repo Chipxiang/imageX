@@ -7,9 +7,11 @@ django.setup()
 from image.models import Category
 
 def main():
-    f = open('category.txt')
-    for line in f:
-        category = line
+    f = open('Category.txt')
+    temp = f.read().splitlines()
+    for i in temp:
+        category = i
+        print(i)
         Category.objects.create(text=category)
     f.close()
 

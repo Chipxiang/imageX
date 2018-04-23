@@ -14,6 +14,7 @@ from .models import Profile
 class RegisterForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField(widget=forms.PasswordInput)
+    email = forms.CharField()
 
 class LoginForm(forms.Form):
 

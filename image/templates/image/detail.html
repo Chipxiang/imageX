@@ -26,7 +26,14 @@
                     </a>
                     {% endif %}
                 </div>
+            <b>Photographer:</b>
+            {{ image.owner.username|linebreaks }}
+            <b>Description:</b>
             {{ image.description|linebreaks }}
+            <b>Tags:</b>
+            {{ image.tag|linebreaks }}
+            <b>Category:</b>
+            {{ image.category|linebreaks }}
         </div>
 
         <div class="image-likes">
