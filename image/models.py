@@ -15,6 +15,8 @@ class Category(models.Model):
     def __str__(self):
         return self.text
 
+class Tag(models.Model):
+    word = models.CharField(max_length=50)
 
 class Image(models.Model):
     users_like = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='images_liked', blank=True)
@@ -22,7 +24,7 @@ class Image(models.Model):
     owner = models.ForeignKey(Member, on_delete=models.CASCADE)
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     description = models.CharField(max_length=20)
-    tag = models.SlugField(max_length=200, blank=True)
+    tag = models.ManyToManyField(Tag)
     image = models.ImageField(upload_to=user_directory_path,validators=[FileExtensionValidator(allowed_extensions=['jpg','jpeg'])])
     uploaded_at = models.DateTimeField(auto_now_add=True, db_index=True)
 
@@ -30,8 +32,17 @@ class Image(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
-        if not self.tag: self.tag = slugify(self.title)
+        #if not self.tag: self.tag = slugify(self.title)
         super(Image, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse('image:detail', args=[self.image])
+
+    def addTag(self, text):
+        if not Tag.objects.filter(word=text):
+            t = Tag(word=text)
+            t.save()
+            tag.add(t)
+        else:
+            t = Tag.objects.filter(word=text)
+            tag.add(t)

@@ -31,7 +31,7 @@
             <b>Description:</b>
             {{ image.description|linebreaks }}
             <b>Tags:</b>
-            {{ image.tag|linebreaks }}
+             <br/>{% for tag in image.tag.all %}{{ tag.word }}<br/>{% endfor %}
             <b>Category:</b>
             {{ image.category|linebreaks }}
         </div>

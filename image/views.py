@@ -2,36 +2,56 @@ from django.shortcuts import render,redirect ,get_object_or_404
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.http import require_POST
 from .forms import ImageForm
+from .forms import TagForm
 from .models import Image
+from .models import Tag
 from account.models import Member
 from django.urls import reverse
 from django.http import HttpResponseRedirect , HttpResponse, JsonResponse
 from django.core.paginator import Paginator
 from django.core.paginator import EmptyPage
 from django.core.paginator import PageNotAnInteger
+from django.forms.formsets import formset_factory
 
 @login_required
 def upload(request):
     member = Member.objects.get(username=request.user.username)
+    TagFormSet = formset_factory(TagForm)
     if( member.image_quota >0 and member.upload_quota >0):
         if request.method == 'POST':
             form = ImageForm(request.POST, request.FILES)
+            tag_formset = TagFormSet(request.POST or None)
             if form.is_valid():
               description = form.cleaned_data['description']
-              tag = form.cleaned_data['tag']
               image = form.cleaned_data['image']
               category = form.cleaned_data['category']
               title = form.cleaned_data['title']
-              u = Image(title=title, tag=tag,description=description,
+              u = Image(title=title,description=description,
                       category=category, image=image,owner=member)
+              u.save()
+              if tag_formset.is_valid():
+                for tag_form in tag_formset:
+                  words = tag_form.cleaned_data.get('word')
+                  if not Tag.objects.filter(word=words):
+                    t = Tag(word=words)
+                    t.save()
+                    u.tag.add(t)
+                    u.save()
+                  else:
+                    t = Tag.objects.filter(word=words)[0]
+                    u.tag.add(t)
+                    u.save()
               u.save()
               member.image_quota = member.image_quota - 1
               member.upload_quota = member.upload_quota - 1
               member.save()
+
+
               return HttpResponseRedirect(reverse("account:dashboard"))
         else:
           form = ImageForm()
-        return render(request, 'image/model_form_upload.html', {'form': form ,'username': request.user.username} )
+          tag_formset = TagFormSet()
+        return render(request, 'image/model_form_upload.html', {'form': form ,'username': request.user.username, 'tag_formset':tag_formset} )
     else:
         return HttpResponse("no quota")
 '''

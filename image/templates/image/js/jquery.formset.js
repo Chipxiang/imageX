@@ -1,10 +1,4 @@
-{% extends "base.html" %}
-{% block title %}Dashboard{% endblock %}
-{% block content %}
-<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
-<script type="text/javascript" src='js/jquery.formset.js'></script>
-<script type="text/javascript">
-	/**
+/**
  * jQuery Formset 1.3-pre
  * @author Stanislaus Madueke (stan DOT madueke AT gmail DOT com)
  * @requires jQuery 1.2.6 or later
@@ -235,45 +229,3 @@
         removed: null                    // Function called each time a form is deleted
     };
 })(jQuery);
-</script>
-<style type="text/css">
-	.add-row {
-		height:30px;
-		font:30px;
-	}
-	.delete-row {
-		height:30px;
-	}
-</style>
-  <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.as_p }}
-    <p>Tags:</p>
-    {{ tag_formset.management_form }}
-    {% for form in tag_formset %}
-    	<div class="tag-formset">
-        {{ form.word }}
-
-        {% if form.word.errors %}
-                {% for error in form.word.errors %}
-                    {{ error|escape }}
-                {% endfor %}
-        {% endif %}
-    </div>
-    {% endfor %}
-    <script>
-    $('.tag-formset').formset({
-        addText: 'add <br></br>',
-        deleteText: ' &nbsp; remove <br></br>'
-    });
-</script>
-    	<input type="submit" value="Upload" class="button"/>
-  </form>
-
-
-
-
-<form action="{% url 'account:dashboard'%}">
-    <input type="submit" value="Cancel" class="button"/>
-
-{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery.min.js"></script>
+<script type="text/javascript">
+	function cloneMore(selector, type) {
+    var newElement = $(selector).clone(true);
+    var total = $('#id_' + type + '-TOTAL_FORMS').val();
+    newElement.find(':input').each(function() {
+        var name = $(this).attr('name').replace('-' + (total-1) + '-','-' + total + '-');
+        var id = 'id_' + name;
+        $(this).attr({'name': name, 'id': id}).val('').removeAttr('checked');
+    });
+    newElement.find('label').each(function() {
+        var newFor = $(this).attr('for').replace('-' + (total-1) + '-','-' + total + '-');
+        $(this).attr('for', newFor);
+    });
+    total++;
+    $('#id_' + type + '-TOTAL_FORMS').val(total);
+    $(selector).after(newElement);
+}
+</script>
+
+  <form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <p>Tags:</p>
+    {{ tag_formset.management_form }}
+    {% for form in tag_formset %}
+    <div class="table">
+    <table class='no_error'>
+        {{ form.as_table }}
+        {% if form.word.errors %}
+                {% for error in form.word.errors %}
+                    {{ error|escape }}
+                {% endfor %}
+        {% endif %}
+        </table>
+    </div>
+    {% endfor %}
+    <input type="button" value="Add More" id="add_more">
+    
+    <script>
+    	$('#add_more').click(function() {
+        	cloneMore('div.table:last', 'service');
+    });
+	</script>
+    	<button type="submit">Upload</button>
+  </form>
+
+
+
+
+<form action="{% url 'account:dashboard'%}">
+    <button type="submit">Cancel</button>
+  </form>
+
+{% endblock %}
