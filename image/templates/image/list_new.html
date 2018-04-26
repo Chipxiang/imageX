@@ -2,7 +2,7 @@
 {% block title %}Images bookmarked{% endblock %}
 {% block content %}
     {% if section == 'images' %}
-    <h1> Your images and <a href="{% url 'image:upload' %}">upload images</a> here</h1>
+    <h1> Your images and <a href="{% url 'image:upload' %}">upload images</a> here and <a href="{% url 'image:delete' None %}">delete</a> </h1>
     {% if not images %}
     <p> You haven't uploaded any images yet ! </p>
     {% endif %}

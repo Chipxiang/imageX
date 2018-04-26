@@ -40,6 +40,7 @@ class Image(models.Model):
     def get_absolute_url(self):
         return reverse('image:detail', args=[self.image])
 
+    @property
     def downloaded(self):
         self.download_count = self.download_count + 1
         self.save()

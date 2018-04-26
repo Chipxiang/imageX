@@ -1,5 +1,9 @@
 {% for image in images %}
-
+<script>
+function toDelete(){
+     location.href="{% url 'image:delete' image.image %}";
+}
+</script>
     <div class="image">
         <a href="{{ image.get_absolute_url }}">
                 <a href="{{ image.get_absolute_url }} ">
@@ -9,6 +13,10 @@
         </a>
         <div class="info">
             <a href="{{ image.get_absolute_url }}" class="title" >{{ image.title }}</a>
+            {% if delete != "None" %}
+            <button onclick="toDelete()">delete</button>
+            {% endif %}
+
         </div>
     </div>
 {% endfor %}

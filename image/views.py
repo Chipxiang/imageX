@@ -12,8 +12,7 @@ from django.core.paginator import Paginator
 from django.core.paginator import EmptyPage
 from django.core.paginator import PageNotAnInteger
 from django.forms.formsets import formset_factory
-from django.http import FileResponse
-
+from django.contrib import messages
 @login_required
 def upload(request):
     member = Member.objects.get(username=request.user.username)
@@ -55,16 +54,6 @@ def upload(request):
         return render(request, 'image/model_form_upload.html', {'form': form ,'username': request.user.username, 'tag_formset':tag_formset} )
     else:
         return HttpResponse("no quota")
-
-'''def download(request):
-  image = get_object_or_404(Image, image=filename)
-  if request.POST.get('download'):
-    try:
-      if action == 'download':
-        image.download_count += 1
-    except:
-      pass
-'''
 '''
 @login_required
 def list(request):
@@ -106,13 +95,59 @@ def image_like(request):
             pass
     return JsonResponse({'status':'ko'})
 
-def image_detail(request, filename):
+def image_download(request, filename):
+    image = get_object_or_404(Image, image=filename)
+    image.download_count += 1
+    image.save()
+    messages.success(request, "Download Successfully")
+    return render(request, 'image/detail.html', {'section': 'images', 'image': image})
+
+def image_delete(request,filename):
+    delete = "delete"
+    if(filename != "None"):
+        member = Member.objects.get(username=request.user.username)
+        image = get_object_or_404(Image, image=filename)
+        image.delete()
+        messages.success(request, " image deleted! ")
+        delete = "delete"
+        member.image_quota += 1
+        member.save()
+
+
+    member = Member.objects.get(username=request.user.username)
+    images = Image.objects.filter(owner=member).order_by('-uploaded_at')
+    paginator = Paginator(images, 8)
+    page = request.GET.get('page')
+    try:
+        images = paginator.page(page)
+    except PageNotAnInteger:
+        # If page is not an integer deliver the first page
+        images = paginator.page(1)
+    except EmptyPage:
+        if request.is_ajax():
+            # If the request is AJAX and the page is out of range return an empty page
+            return HttpResponse('')
+        # If page is out of range deliver last page of results
+        images = paginator.page(paginator.num_pages)
+    if request.is_ajax():
+        return render(request,
+                      'image/list_ajax.html',
+                      {'section': 'images', 'images': images,'delete': delete})
+    return render(request,
+                  'image/list_new.html',
+                  {'section': 'images', 'images': images,'delete': delete})
+
+
+
+def image_detail(request, filename ):
     image = get_object_or_404(Image, image=filename)
     return render(request, 'image/detail.html', {'section': 'images','image': image})
 
 @login_required
 
 def image_list(request):
+
+    delete = "None"
     member = Member.objects.get(username=request.user.username)
     images = Image.objects.filter(owner=member).order_by('-uploaded_at')
     paginator = Paginator(images, 8)
@@ -131,9 +166,9 @@ def image_list(request):
     if request.is_ajax():
         return render(request,
                       'image/list_ajax.html',
-                      {'section': 'images', 'images': images})
+                      {'section': 'images', 'images': images,'delete':delete})
     return render(request,
                   'image/list_new.html',
-                   {'section': 'images', 'images': images})
+                   {'section': 'images', 'images': images,'delete': delete})
 
 

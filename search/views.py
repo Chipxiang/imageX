@@ -46,6 +46,7 @@ def search(request):
     return render(request, 'search/search.html', context)
 '''
 def search(request):
+    delete = "None"
     images = Image.objects.all().order_by('-uploaded_at')
     form = SearchForm(request.POST)
     if form.is_valid():
@@ -92,9 +93,9 @@ def search(request):
     if request.is_ajax():
         return render(request,
                       'image/list_ajax.html',
-                      {'section': 'search', 'images': images,})
+                      {'section': 'search', 'images': images,'delete': delete})
     context = {
-        'section': 'search', 'images': images, 'form': SearchForm,
+        'section': 'search', 'images': images, 'form': SearchForm, 'delete':delete
     }
     return render(request,
                   'image/list_new.html', context)

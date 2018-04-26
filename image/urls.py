@@ -10,4 +10,6 @@ urlpatterns = [
     #url(r'view/(?P<filename>.*)/', views.image_detail, name='detail'),
     url(r'^detail/(?P<filename>.*)/', views.image_detail, name='detail'),
     url(r'^like/$', views.image_like, name='like'),
+    url(r'^delete/(?P<filename>.*)/', views.image_delete, name='delete'),
+    url(r'^download/(?P<filename>.*)/', views.image_download, name='download'),
 ]

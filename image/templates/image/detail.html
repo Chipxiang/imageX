@@ -1,8 +1,12 @@
 {% extends "base.html" %}
 {% block title %}{{ image.title }}{% endblock %}
 {% block content %}
-
-    <h1>{{ image.title }}</h1>
+<script>
+function toDownload(){
+     location.href="{% url 'image:download' image.image %}";
+}
+</script>
+         <h1>{{ image.title }}</h1>
 
         <a href="{{ image.image.url }}">
             <img src='/media/{{image.image}}' height="200px" width="300px" >
@@ -12,7 +16,7 @@
 
     <a download="{{ image.title }}" href="{{ image.image.url }}" title="download" action="download">
     <!--input type="submit" value="Download" name="download" class="button" />-->
-    <button onclick="{{ image.downloaded }}">Download</button>
+    <button onclick="toDownload()">Download</button>
     </a>
    
 
@@ -30,7 +34,7 @@
                         <span class="total">{{ total_likes }}</span>
                         like{{ total_likes|pluralize }}
                     </span>
-                    {% if image.owner.username != request.user.username %}
+                    {% if user.is_authenticated and image.owner.username != request.user.username %}
                     <a href="#" data-id="{{ image.image }}" data-action="{% if request.user in users_like %}un{% endif %}like" class="like button">
                         {% if request.user not in users_like %}
                             Like

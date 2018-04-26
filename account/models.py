@@ -17,7 +17,7 @@ class Member( auth_models.User):
 
 class Profile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL,on_delete=models.CASCADE)
-    name = models.CharField(default='',max_length=50)
+    name = models.CharField(default=None,max_length=50)
     self_description = models.TextField(default='',max_length=500)
     avatar = models.ImageField(upload_to=user_directory_path,validators=[FileExtensionValidator(allowed_extensions=['jpg','jpeg'])],default="media/default/avatar.jpg")
     def __str__(self):
