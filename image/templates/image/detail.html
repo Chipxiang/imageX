@@ -44,8 +44,8 @@ function toDownload(){
                     </a>
                     {% endif %}
                 </div>
-            <b>Photographer:</b>
-            {{ image.owner.username|linebreaks }}
+            <b>Photographer:</b><a href="{% url 'account:profile' image.owner.username %}"
+            {{ image.owner.username|linebreaks }}</a>
             <b>Description:</b>
             {{ image.description|linebreaks }}
             <b>Tags:</b>

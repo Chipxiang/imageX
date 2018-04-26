@@ -1,4 +1,4 @@
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect,get_object_or_404
 from django.http import HttpResponse
 from django.contrib import auth
 from django.urls import reverse ,reverse_lazy
@@ -13,6 +13,12 @@ from .forms import RegisterForm,UserEditForm, ProfileEditForm
 from .token_generator import modified_token_generator
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
+
+def profile(request,filename):
+    member = get_object_or_404(Member, username=filename)
+    return render(request, 'account/profile.html', {'member': member, 'section': 'images'})
+
+
 
 def dashboard(request):
     member = Member.objects.get(username=request.user.username)

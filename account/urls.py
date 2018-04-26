@@ -18,6 +18,7 @@ urlpatterns = [
     url(r'^invite/$', views.invite_newmemeber, name='invite'),
     url(r'^invite/done$', views.invite_done, name='invite_done'),
     url(r'^edit/$', views.edit, name='edit'),
+    url(r'^profile/(?P<filename>.*)/', views.profile, name='profile'),
 
     url(r'^invite/confirm/(?P<token>[-\w]+)/$', views.invite_confirm, name='invite_confirm'),
 
