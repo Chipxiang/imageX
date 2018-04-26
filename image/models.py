@@ -6,6 +6,7 @@ from django.urls import reverse
 from django.conf import settings
 from django.core.validators import FileExtensionValidator
 
+
 def user_directory_path(instance, filename):
     # file will be uploaded to MEDIA_ROOT/user_<id>/<filename>
     return '{0}_{1}'.format(instance.title, filename)
@@ -27,7 +28,7 @@ class Image(models.Model):
     tag = models.ManyToManyField(Tag)
     image = models.ImageField(upload_to=user_directory_path,validators=[FileExtensionValidator(allowed_extensions=['jpg','jpeg'])])
     uploaded_at = models.DateTimeField(auto_now_add=True, db_index=True)
-
+    download_count = models.IntegerField(default=0)
     def __str__(self):
         return self.title
 
@@ -37,3 +38,7 @@ class Image(models.Model):
 
     def get_absolute_url(self):
         return reverse('image:detail', args=[self.image])
+
+    def downloaded(self):
+        download_count +=1
+        

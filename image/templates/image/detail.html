@@ -7,13 +7,23 @@
             <img src='/media/{{image.image}}' height="200px" width="300px" >
         </a>
         <br></br>
-    <a download="{{ image.title }}" href="{{ image.image.url }}" title="download"><input type="submit" value="Download" class="button"/></a>
+
+    <a target="_blank" download="{{ image.title }}" href="{{ image.image.url }}" title="download" action="download">
+    <input type="submit" value="Download" name="download" class="button"/>
+    </a>
+
+ 
+
     <br><br><br>
+
+    <p>Downloads:</p>
+    {{ image.download_count|linebreaks }}
+
     {% with total_likes=image.users_like.count users_like=image.users_like.all %}
     
         
         <div class="image-info">
-                <div>
+            <div>
                     <span class="count">
                         <span class="total">{{ total_likes }}</span>
                         like{{ total_likes|pluralize }}

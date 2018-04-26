@@ -12,6 +12,7 @@ from django.core.paginator import Paginator
 from django.core.paginator import EmptyPage
 from django.core.paginator import PageNotAnInteger
 from django.forms.formsets import formset_factory
+from django.http import FileResponse
 
 @login_required
 def upload(request):
@@ -54,6 +55,30 @@ def upload(request):
         return render(request, 'image/model_form_upload.html', {'form': form ,'username': request.user.username, 'tag_formset':tag_formset} )
     else:
         return HttpResponse("no quota")
+
+def download_count(request):
+  '''image = get_object_or_404(Image, image=filename)
+  if request.POST.get('download'):
+    try:
+      if action == 'download':
+        image.download_count += 1
+      
+    except:
+      pass
+  return render(request, 'image/detail.html', {'section': 'images','image': image})'''
+
+  '''image_name = request.POST.get('filename')
+  action = request.POST.get('action')
+  if image_name and action:
+      try:
+          image = Image.objects.get(image=image_name)
+          if action == 'download':
+             image.download_count += 1
+          return render(request, 'image/detail.html', {'section': 'images','image': image})
+      except:
+          pass
+  return render(request, 'image/detail.html', {'section': 'images','image': image})'''
+
 '''
 @login_required
 def list(request):
