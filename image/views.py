@@ -32,16 +32,16 @@ def upload(request):
               if tag_formset.is_valid():
                 for tag_form in tag_formset:
                   words = tag_form.cleaned_data.get('word')
-                  if not Tag.objects.filter(word=words):
-                    t = Tag(word=words)
-                    t.save()
-                    u.tag.add(t)
-                    u.save()
-                  else:
-                    t = Tag.objects.filter(word=words)[0]
-                    u.tag.add(t)
-                    u.save()
-              u.save()
+                  if words is not None:
+                    if not Tag.objects.filter(word=words):
+                      t = Tag(word=words)
+                      t.save()
+                      u.tag.add(t)
+                      u.save()
+                    else:
+                      t = Tag.objects.filter(word=words)[0]
+                      u.tag.add(t)
+                      u.save()
               member.image_quota = member.image_quota - 1
               member.upload_quota = member.upload_quota - 1
               member.save()

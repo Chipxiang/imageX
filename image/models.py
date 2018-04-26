@@ -20,10 +20,10 @@ class Tag(models.Model):
 
 class Image(models.Model):
     users_like = models.ManyToManyField(settings.AUTH_USER_MODEL, related_name='images_liked', blank=True)
-    title = models.CharField(max_length=50)
+    title = models.CharField(max_length=50, default='Untitled')
     owner = models.ForeignKey(Member, on_delete=models.CASCADE)
-    category = models.ForeignKey(Category, on_delete=models.CASCADE)
-    description = models.CharField(max_length=20)
+    category = models.ForeignKey(Category, null=True, blank=True, on_delete=models.CASCADE)
+    description = models.TextField(max_length=500)
     tag = models.ManyToManyField(Tag)
     image = models.ImageField(upload_to=user_directory_path,validators=[FileExtensionValidator(allowed_extensions=['jpg','jpeg'])])
     uploaded_at = models.DateTimeField(auto_now_add=True, db_index=True)
@@ -37,12 +37,3 @@ class Image(models.Model):
 
     def get_absolute_url(self):
         return reverse('image:detail', args=[self.image])
-
-    def addTag(self, text):
-        if not Tag.objects.filter(word=text):
-            t = Tag(word=text)
-            t.save()
-            tag.add(t)
-        else:
-            t = Tag.objects.filter(word=text)
-            tag.add(t)

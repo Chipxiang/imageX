@@ -56,9 +56,9 @@ def search(request):
         form.save()
         if searchType == 'Tag':
             if orderType == 'Time':
-                images = Image.objects.filter(tag__iexact=keyword).order_by('-uploaded_at')
+                images = Image.objects.filter(tag__word__iexact=keyword).order_by('-uploaded_at')
             else:
-                images = Image.objects.filter(tag__iexact=keyword).order_by('-user_likes')
+                images = Image.objects.filter(tag__word__iexact=keyword).order_by('-user_likes')
         if searchType == 'Photographer':
             if orderType == 'Time':
                 images = Image.objects.filter(owner__username__iexact=keyword).order_by('-uploaded_at')
