@@ -133,11 +133,10 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-
-
-EMAIL_USE_TLS = True
+#EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+EMAIL_USE_SSL = True
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = 'imagexalphatech@gmail.com'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'Imagexalphatech@gmail.com'
 EMAIL_HOST_PASSWORD = 'COMP3297imageX'
-EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL = 'imageX'
