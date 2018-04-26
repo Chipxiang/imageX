@@ -56,29 +56,15 @@ def upload(request):
     else:
         return HttpResponse("no quota")
 
-def download_count(request):
-  '''image = get_object_or_404(Image, image=filename)
+'''def download(request):
+  image = get_object_or_404(Image, image=filename)
   if request.POST.get('download'):
     try:
       if action == 'download':
         image.download_count += 1
-      
     except:
       pass
-  return render(request, 'image/detail.html', {'section': 'images','image': image})'''
-
-  '''image_name = request.POST.get('filename')
-  action = request.POST.get('action')
-  if image_name and action:
-      try:
-          image = Image.objects.get(image=image_name)
-          if action == 'download':
-             image.download_count += 1
-          return render(request, 'image/detail.html', {'section': 'images','image': image})
-      except:
-          pass
-  return render(request, 'image/detail.html', {'section': 'images','image': image})'''
-
+'''
 '''
 @login_required
 def list(request):

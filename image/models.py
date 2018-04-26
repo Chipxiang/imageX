@@ -29,6 +29,7 @@ class Image(models.Model):
     image = models.ImageField(upload_to=user_directory_path,validators=[FileExtensionValidator(allowed_extensions=['jpg','jpeg'])])
     uploaded_at = models.DateTimeField(auto_now_add=True, db_index=True)
     download_count = models.IntegerField(default=0)
+
     def __str__(self):
         return self.title
 
@@ -40,5 +41,5 @@ class Image(models.Model):
         return reverse('image:detail', args=[self.image])
 
     def downloaded(self):
-        download_count +=1
-        
+        self.download_count = self.download_count + 1
+        self.save()

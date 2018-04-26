@@ -10,5 +10,4 @@ urlpatterns = [
     #url(r'view/(?P<filename>.*)/', views.image_detail, name='detail'),
     url(r'^detail/(?P<filename>.*)/', views.image_detail, name='detail'),
     url(r'^like/$', views.image_like, name='like'),
-
 ]
