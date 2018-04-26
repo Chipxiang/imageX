@@ -6,10 +6,12 @@
         <a href="{{ image.image.url }}">
             <img src='/media/{{image.image}}' height="200px" width="300px" >
         </a>
-
-
+        <br></br>
+    <a download="{{ image.title }}" href="{{ image.image.url }}" title="download"><input type="submit" value="Download" class="button"/></a>
+    <br><br><br>
     {% with total_likes=image.users_like.count users_like=image.users_like.all %}
-
+    
+        
         <div class="image-info">
                 <div>
                     <span class="count">
