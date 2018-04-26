@@ -7,12 +7,39 @@
     </title>
     {% load static %}
     <link href="{% static 'base.css' %}" rel="stylesheet">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+    <script src=" http://cdn.jsdelivr.net/jquery.cookie/1.4.1/jquery.cookie.min.js "></script>
+
+<script>
+    var csrftoken = $.cookie('csrftoken');
+    function csrfSafeMethod(method) {
+        // these HTTP methods do not require CSRF protection
+        return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
+    }
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrftoken);
+            }
+        }
+    });
+
+    $(document).ready(function(){
+        {% block domready %}
+        {% endblock %}
+    });
+
+    function toSearch(){
+    location.href = "{% url 'search:search' %}";
+}
+</script>
+
 </head>
 
 
 <body>
 <div id="header">
-    <span class="logo">ImageX</span>
+    <span class="logo" onclick="toSearch()">ImageX</span>
     {% if request.user.is_authenticated %}
     <ul class="menu">
         <li {% if section == "dashboard" %}class="selected"{% endif %}>
@@ -33,15 +60,15 @@
     </ul>
     {% endif %}
     <span class="user">
-        {% if request.user.is_authenticated %} Hello  {{ request.user.username }},
-        <a href="{% url 'account:logout' %}">Logout
-        </a>
+        {% if request.user.is_authenticated %} Hello  {{ request.user.username }} !    
+        <a href="{% url 'account:logout' %}"><span left-margin=10px;>Logout</span></a>
         {% else %}
         <a href="{% url 'account:login' %}">Log-in</a>
         {% endif %}
     </span>
 </div>
-{% if messages %}
+
+<!--{% if messages %}
     <ul class="messages">
         {% for message in messages %}
         <li class="{{ message.tags }}">
@@ -49,33 +76,12 @@
             <a href="#" class="close"> </a>
         </li> {% endfor %}
     </ul>
-{% endif %}
+{% endif %}-->
 
 <div id="content">
     {% block content %}
     {% endblock %}
 </div>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
-    <script src=" http://cdn.jsdelivr.net/jquery.cookie/1.4.1/jquery.cookie.min.js "></script>
-    <script>
-        var csrftoken = $.cookie('csrftoken');
-        function csrfSafeMethod(method) {
-            // these HTTP methods do not require CSRF protection
-            return (/^(GET|HEAD|OPTIONS|TRACE)$/.test(method));
-        }
-        $.ajaxSetup({
-            beforeSend: function(xhr, settings) {
-                if (!csrfSafeMethod(settings.type) && !this.crossDomain) {
-                    xhr.setRequestHeader("X-CSRFToken", csrftoken);
-                }
-            }
-        });
-
-        $(document).ready(function(){
-            {% block domready %}
-            {% endblock %}
-		});
-    </script>
 
 </body>
 </html>

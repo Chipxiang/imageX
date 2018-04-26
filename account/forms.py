@@ -24,12 +24,12 @@ class LoginForm(forms.Form):
 class UserEditForm(forms.ModelForm):
     class Meta:
         model = Member
-        fields = ('name', 'email')
+        fields = ('email',)
 
 class ProfileEditForm(forms.ModelForm):
     class Meta:
         model = Profile
-        fields = ('date_of_birth', 'avatar')
+        fields = ('name', 'self_description')
 
 
 class InvitationForm(forms.Form):
