@@ -6,6 +6,7 @@ from django.core.paginator import Paginator
 from django.core.paginator import EmptyPage
 from django.core.paginator import PageNotAnInteger
 from django.contrib import messages
+from django.db.models import Count
 '''
 def search(request):
 
@@ -59,17 +60,17 @@ def search(request):
             if orderType == 'Time':
                 images = Image.objects.filter(tag__word__iexact=keyword).order_by('-uploaded_at')
             else:
-                images = Image.objects.filter(tag__word__iexact=keyword).order_by('-user_likes')
+                images = Image.objects.filter(tag__word__iexact=keyword).annotate(num_likes=Count('users_like')).order_by('-num_likes', "-download_count")
         if searchType == 'Photographer':
             if orderType == 'Time':
                 images = Image.objects.filter(owner__username__iexact=keyword).order_by('-uploaded_at')
             else:
-                images = Image.objects.filter(owner__username__iexact=keyword).order_by('-user_likes')
+                images = Image.objects.filter(owner__username__iexact=keyword).annotate(num_likes=Count('users_like')).order_by('-num_likes', "-download_count")
         if searchType == 'Category':
             if orderType == 'Time':
                 images = Image.objects.filter(category__text__iexact=keyword).order_by('-uploaded_at')
             else:
-                images = Image.objects.filter(category__text__iexact=keyword).order_by('-user_likes')
+                images = Image.objects.filter(category__text__iexact=keyword).annotate(num_likes=Count('users_like')).order_by('-num_likes', "-download_count")
     #if 'searchItem' in request.GET:
        # keyword = request.GET['searchItem']
         #if keyword != None :
