@@ -91,14 +91,14 @@ def search(request):
 
 
     return render(request, 'search/search.html', context)
-
+.annotate(num_likes=Count('users_like')).order_by('-num_likes', "-download_count")
 '''
 
 def search(request):
 
     delete = "None"
 
-    images = Image.objects.all().order_by('-uploaded_at')
+    images = Image.objects.all().annotate(num_likes=Count('users_like')).order_by('-num_likes', "-download_count")
 
     form = SearchForm(request.POST)
 
