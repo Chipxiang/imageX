@@ -1,33 +1,41 @@
 {% extends "base.html" %}
 {% block title %}Images bookmarked{% endblock %}
 {% block content %}
+<style>
+.searchWidget{
+    margin-right: 20px;
+}
+.searchWidget select{
+    font-size: 15px;
+}
 
+</style>
     {% if section == 'images' %}
 
     <h1>{{ user.profile.name }}</h1>
     <p>{{ user.profile.self_description }}</p>
     
-    <p> Your images and <a href="{% url 'image:upload' %}">upload images</a> here and <a href="{% url 'image:delete' None %}">delete</a> </p>
+    <p><a href="{% url 'image:upload' %}">upload images</a>    |    <a href="{% url 'image:delete' None %}">delete</a></p>
     {% if not images %}
     <p> You haven't uploaded any images yet ! </p>
     {% endif %}
     {% endif %}
 
     {% if section == 'search'%}
-<div>
-    <form action="{% url 'search:search'%}" method="post" enctype="multipart/form-data">
-    {{ form.as_p }}
-    {% csrf_token %}
-    <p><input type="submit" value="Search"></p>
-   </form>
-</div>
-   <!-- <form action="{% url 'search:search'%}">
-      <input type="text" name="searchItem" placeholder=' keyword'> <input type="Submit" value="search">
-    </form>-->
+    <div>
+        <form action="{% url 'search:search'%}" method="post" enctype="multipart/form-data">
+            <span class="searchWidget">{{ form.keyword }}</span><br><br><br>
+            <span class="searchWidget">Search type: {{ form.searchType }}</span>
+            <span class="searchWidget">Order by: {{ form.orderType}}<span>
+        {% csrf_token %}
+       </form>
+    </div><br><br><br>
     {% endif %}
+
     <div id="image-list">
         {% include "image/list_ajax.html" %}
     </div>
+
 {% endblock %}
 {% block domready %}
     var page = 1;

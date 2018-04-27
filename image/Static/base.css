@@ -551,3 +551,8 @@ img.user-detail {
     color:#ccc;
 
 }
+
+.searchWidget {
+    margin-right: 20px;
+    color: grey;
+}

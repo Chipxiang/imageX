@@ -6,12 +6,13 @@ function toDownload(){
      location.href="{% url 'image:download' image.image %}";
 }
 </script>
-         <h1>{{ image.title }}</h1>
 
-        <a href="{{ image.image.url }}">
-            <img src='/media/{{image.image}}' height="200px" width="300px" >
-        </a>
-        <br></br>
+    <h1>{{ image.title }}</h1>
+
+    <a href="{{ image.image.url }}">
+        <img src='/media/{{image.image}}' height="auto" width="300px" >
+    </a>
+    <br></br>
 
 
     <a download="{{ image.title }}" href="{{ image.image.url }}" title="download" action="download">
@@ -21,46 +22,51 @@ function toDownload(){
 
     <br><br><br>
 
-    <p>Downloads:</p>
-    {{ image.download_count|linebreaks }}
+
+
 
     {% with total_likes=image.users_like.count users_like=image.users_like.all %}
     
         
-        <div class="image-info">
-            <div>
-                    <span class="count">
-                        <span class="total">{{ total_likes }}</span>
-                        like{{ total_likes|pluralize }}
-                    </span>
-                    {% if user.is_authenticated and image.owner.username != request.user.username %}
-                    <a href="#" data-id="{{ image.image }}" data-action="{% if request.user in users_like %}un{% endif %}like" class="like button">
-                        {% if request.user not in users_like %}
-                            Like
-                        {% else %}
-                            Unlike
-                        {% endif %}
-                    </a>
-                    {% endif %}
-                </div>
-            <b>Photographer:</b><a href="{% url 'account:profile' image.owner.username %}"
-            {{ image.owner.username|linebreaks }}</a>
-            <b>Description:</b>
-            {{ image.description|linebreaks }}
-            <b>Tags:</b>
-             <br/>{% for tag in image.tag.all %}{{ tag.word }}<br/>{% endfor %}
-            <b>Category:</b>
-            {{ image.category|linebreaks }}
+    <div class="image-info">
+        <div>
+            <span class="count">
+                <span class='total'>{{ total_likes }}</span>
+                like{{ total_likes|pluralize }}
+            </span>
+            <span class="count">
+                <span>{{ image.download_count}}</span>
+                download{{ image.download_count|pluralize }}
+            </span>
+            {% if user.is_authenticated and image.owner.username != request.user.username %}
+            <a href="#" data-id="{{ image.image }}" data-action="{% if request.user in users_like %}un{% endif %}like" class="like button">
+                {% if request.user not in users_like %}
+                    Like
+                {% else %}
+                    Unlike
+                {% endif %}
+            </a>
+            {% endif %}
         </div>
+        <b>Photographer: </b><a href="{% url 'account:profile' image.owner.username %}">
+        {{ image.owner.username}}</a><br><br>
+        <b>Description:</b>
+        {{ image.description|linebreaks }}
+        <b>Tags:</b><br><br>
+        {% for tag in image.tag.all %}{{ tag.word }}<span>  </span>{% endfor %}
+        <br><br>
+        <b>Category:</b>
+        {{ image.category|linebreaks }}
+    </div>
 
         <div class="image-likes">
+            <b>Liked by: </b><br>
             {% for user in image.users_like.all %}
                 <div>
-                    <img src="{{ user.profile.avatar.url }}">
                     <p>{{ user.username }}</p>
                 </div>
             {% empty %}
-                Nobody likes this image yet.
+                <p>Nobody likes this image yet.</p>
             {% endfor %}
         </div>
     {% endwith %}

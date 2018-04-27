@@ -8,7 +8,7 @@ class SearchForm(forms.Form):
         choices=SearchType_CHOICES,)
      orderType = forms.ChoiceField(
         choices=OrderType_CHOICES, )
-     keyword = forms.CharField()
+     keyword = forms.CharField(label='search',widget=forms.TextInput(attrs={'placeholder': 'Search'}))
 
 
      def save(self):

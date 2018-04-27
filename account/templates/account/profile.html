@@ -1,10 +1,12 @@
 {% extends "base.html" %}
 {% block content %}
-<html lang="en">
+
+<html>
 <head>
     <div>
-        <li>member name : {{ member.profile.name }}</li>
-        <li>member contact address : {{ member.email }}</li>
+        <h1>Photographer: {{ member.profile.name }}</h1>
+        <b>Self description: </b>
+        <p>{{ member.profile.self_description }}</p>
 
 
     </div>
