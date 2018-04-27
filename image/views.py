@@ -101,7 +101,7 @@ def image_download(request, filename):
     image.download_count += 1
     image.save()
     messages.success(request, "Download Successfully")
-    return render(request, 'image/detail.html', {'section': 'images', 'image': image})
+    return redirect('image:detail', filename=image.image)
 
 def image_delete(request,filename):
     delete = "delete"
