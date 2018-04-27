@@ -11,7 +11,7 @@ def main():
         time.sleep(10)
         rows = Member.objects.all()
         for member in rows:
-            member.upload_quota = 100
+            member.upload_quota = 5
             member.save()
             print(member.upload_quota)
 

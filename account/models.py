@@ -10,7 +10,7 @@ def user_directory_path(instance, filename):
     return 'user/{0}_{1}'.format(instance.user.username, filename)
 
 class Member( auth_models.User):
-    upload_quota = models.IntegerField(default=100)
+    upload_quota = models.IntegerField(default=5)
     image_quota = models.IntegerField(default=200)
     def __str__(self):
         return self.username

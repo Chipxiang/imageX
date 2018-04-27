@@ -8,25 +8,13 @@
 .searchWidget select{
     font-size: 15px;
 }
-button {
-    background-color: white;
-    color: white;
-    padding: 6px;
-    text-align: center;
-    text-decoration: none;
-    display: inline-block;
-    font-size: 16px;
-    margin: 4px 2px;
-    cursor: pointer;
-    border-radius: 12px;
-}
 </style>
     {% if section == 'images' %}
 
     <h1>{{ user.profile.name }}</h1>
     <p>{{ user.profile.self_description }}</p>
     
-    <button><a href="{% url 'image:upload' %}">upload</a></button>        <button><a href="{% url 'image:delete' None %}">delete</a></button>
+    </p><a href="{% url 'image:upload' %}">upload</a>    |   <a href="{% url 'image:delete' None %}">delete</p></button>
     <br><br>
     {% if not images %}
     <p> You haven't uploaded any images yet ! </p>

@@ -10,6 +10,12 @@ class SearchForm(forms.Form):
         choices=OrderType_CHOICES, )
      keyword = forms.CharField(label='search',widget=forms.TextInput(attrs={'placeholder': 'Search'}))
 
+     def change(self,one,two,three):
+        searchType = one;
+        orderType = two;
+        keyword = three;
+
+
 
      def save(self):
          searchType = self.cleaned_data["searchType"]
