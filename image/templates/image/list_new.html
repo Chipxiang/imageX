@@ -1,8 +1,13 @@
 {% extends "base.html" %}
 {% block title %}Images bookmarked{% endblock %}
 {% block content %}
+
     {% if section == 'images' %}
-    <h1> Your images and <a href="{% url 'image:upload' %}">upload images</a> here and <a href="{% url 'image:delete' None %}">delete</a> </h1>
+
+    <h1>{{ user.profile.name }}</h1>
+    <p>{{ user.profile.self_description }}</p>
+    
+    <p> Your images and <a href="{% url 'image:upload' %}">upload images</a> here and <a href="{% url 'image:delete' None %}">delete</a> </p>
     {% if not images %}
     <p> You haven't uploaded any images yet ! </p>
     {% endif %}
@@ -31,18 +36,18 @@
     $(window).scroll(function() {
         var margin = $(document).height() - $(window).height() - 200;
         if  ($(window).scrollTop() > margin && empty_page == false && block_request == false) {
-		    block_request = true;
-		    page += 1;
-		    $.get('?page=' + page, function(data) {
-		        if(data == '')
-		        {
-		            empty_page = true;
-		        }
-		        else {
+            block_request = true;
+            page += 1;
+            $.get('?page=' + page, function(data) {
+                if(data == '')
+                {
+                    empty_page = true;
+                }
+                else {
                     block_request = false;
                     $('#image-list').append(data);
-    	        }
+                }
             });
-    	}
+        }
     });
 {% endblock %}
