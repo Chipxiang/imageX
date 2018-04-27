@@ -8,6 +8,10 @@
     <a href="{% url 'account:password_change' %}">change your password</a>.
   </p>
 
+  	<h1>Profile Info</h1>
+  	<h2>Name: {{ user.profile.name }}</h2>
+    <h3>Self Description:<br>{{ user.profile.self_description }}</h3>
+   <br><br><br>
   <p> remaining upload quota today: {{ member.upload_quota }}</p>
   <p> total remaining upload quota: {{ member.image_quota }}</p>
 

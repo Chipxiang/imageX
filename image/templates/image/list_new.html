@@ -16,6 +16,7 @@
     <p>{{ user.profile.self_description }}</p>
     
     <p><a href="{% url 'image:upload' %}">upload</a>   |   <a href="{% url 'image:delete' None %}">delete</a></p>
+
     <br><br>
     {% if not images %}
     <p> You haven't uploaded any images yet ! </p>

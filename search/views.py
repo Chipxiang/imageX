@@ -1,6 +1,6 @@
 from django.shortcuts import render
 
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseRedirect
 
 from image.models import Image
 
@@ -15,9 +15,9 @@ from django.core.paginator import PageNotAnInteger
 from django.contrib import messages
 
 from django.db.models import Count
+from django.contrib import messages
 
 '''
-
 def search(request):
 
 
@@ -91,58 +91,77 @@ def search(request):
 
 
     return render(request, 'search/search.html', context)
-.annotate(num_likes=Count('users_like')).order_by('-num_likes', "-download_count")
+
 '''
 
 def search(request):
 
+
+    keyword = None
+    orderType = None
+    searchType = None
+
     delete = "None"
 
-    images = Image.objects.all().annotate(num_likes=Count('users_like')).order_by('-num_likes', "-download_count")
+    if(request.POST.get('next', '/')):
+        next = request.POST.get('next','/')
 
-    form = SearchForm(request.POST)
+    images = Image.objects.all().order_by('-uploaded_at')
+
+    form = SearchForm(request.POST or None)
 
     if form.is_valid():
-
         cd = form.cleaned_data
-
         keyword = cd['keyword']
-
         orderType = cd['orderType']
-
-        searchType=cd['searchType']
-
+        searchType = cd['searchType']
         form.save()
+        request.session['keyword'] = keyword
+        request.session['orderType'] = orderType
+        request.session['searchType'] = searchType
 
-        if searchType == 'Tag':
+    if not keyword and 'keyword' in request.session:
+        keyword = request.session['keyword']
+        searchType = request.session['searchType']
+        orderType = request.session['orderType']
+        form.change(keyword,searchType,orderType)
 
-            if orderType == 'Time':
 
-                images = Image.objects.filter(tag__word__iexact=keyword).order_by('-uploaded_at')
+    if searchType == 'Tag':
 
-            else:
+        if orderType == 'Time':
 
-                images = Image.objects.filter(tag__word__iexact=keyword).annotate(num_likes=Count('users_like')).order_by('-num_likes', "-download_count")
+            images = Image.objects.filter(tag__word__iexact=keyword).order_by('-uploaded_at')
 
-        if searchType == 'Photographer':
+        else:
 
-            if orderType == 'Time':
+            images = Image.objects.filter(tag__word__iexact=keyword).annotate(num_likes=Count('users_like')).order_by(
+                '-num_likes', "-download_count")
 
-                images = Image.objects.filter(owner__username__iexact=keyword).order_by('-uploaded_at')
+    if searchType == 'Photographer':
 
-            else:
+        if orderType == 'Time':
 
-                images = Image.objects.filter(owner__username__iexact=keyword).annotate(num_likes=Count('users_like')).order_by('-num_likes', "-download_count")
+            images = Image.objects.filter(owner__username__iexact=keyword).order_by('-uploaded_at')
 
-        if searchType == 'Category':
+        else:
 
-            if orderType == 'Time':
+            images = Image.objects.filter(owner__username__iexact=keyword).annotate(
+                num_likes=Count('users_like')).order_by('-num_likes', "-download_count")
 
-                images = Image.objects.filter(category__text__iexact=keyword).order_by('-uploaded_at')
+    if searchType == 'Category':
 
-            else:
+        if orderType == 'Time':
 
-                images = Image.objects.filter(category__text__iexact=keyword).annotate(num_likes=Count('users_like')).order_by('-num_likes', "-download_count")
+            images = Image.objects.filter(category__text__iexact=keyword).order_by('-uploaded_at')
+
+        else:
+
+            images = Image.objects.filter(category__text__iexact=keyword).annotate(
+                num_likes=Count('users_like')).order_by('-num_likes', "-download_count")
+
+
+
 
     #if 'searchItem' in request.GET:
 
@@ -183,21 +202,21 @@ def search(request):
         # If page is out of range deliver last page of results
 
         images = paginator.page(paginator.num_pages)
-
     if request.is_ajax():
 
         return render(request,
 
                       'image/list_ajax.html',
 
-                      {'section': 'search', 'images': images,'delete': delete})
+                      {'section': 'search', 'images': images,'delete': delete, 'form':form,  })
 
     context = {
 
-        'section': 'search', 'images': images, 'form': SearchForm, 'delete':delete
+        'section': 'search', 'images': images, 'form': form, 'delete':delete,
 
     }
 
     return render(request,
 
                   'image/list_new.html', context)
+
